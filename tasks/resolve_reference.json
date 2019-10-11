@@ -1,0 +1,28 @@
+{
+  "description": "Generate targets from Terraform Statefile",
+  "files": ["ruby_task_helper/files/task_helper.rb"],
+  "input_method": "stdin",
+  "parameters": {
+    "dir": {
+      "type": "String[1]"
+    },
+    "resource_type": {
+      "type": "String[1]"
+    },
+    "statefile": {
+      "type": "Optional[String[1]]"
+    },
+    "backend": {
+      "type": "Optional[String[1]]"
+    },
+    "uri": {
+      "type": "Optional[String[1]]"
+    },
+    "name": {
+      "type": "Optional[String[1]]"
+    },
+    "config": {
+      "type": "Optional[Hash]"
+    }
+  }
+}

@@ -1,0 +1,14 @@
+language: ruby
+cache: bundler
+rvm:
+- 2.5
+
+before_install:
+- git clone https://github.com/puppetlabs/puppetlabs-ruby_task_helper ../ruby_task_helper
+script:
+- bundle exec rake spec
+- bundle exec rubocop
+
+notifications:
+  email: false
+  
