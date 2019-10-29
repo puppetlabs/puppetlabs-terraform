@@ -22,6 +22,14 @@ describe Terraform do
 
       expect(state).to eq(JSON.parse(File.read(statefile)))
     end
+
+    it 'expands the dir relative to the Boltdir' do
+      statefile = File.join(terraform_dir, 'empty.tfstate')
+      state = subject.load_statefile(dir: '.',
+                                     statefile: 'empty.tfstate',
+                                     _boltdir: terraform_dir)
+      expect(state).to eq(JSON.parse(File.read(statefile)))
+    end
   end
 
   shared_examples('loading terraform targets') do

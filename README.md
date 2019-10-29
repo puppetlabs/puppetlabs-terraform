@@ -18,7 +18,7 @@ You will need to have installed `Terraform` on the system you wish to run bolt f
 
 The Terraform plugin supports looking up target objects from a Terraform state file. It accepts several fields:
 
--   `dir`: The directory containing either a local Terraform state file or Terraform configuration to read remote state from.
+-   `dir`: The directory containing either a local Terraform state file or Terraform configuration to read remote state from. Relative to the active Boltdir unless absolute path is specified.
 -   `resource_type`: The Terraform resources to match, as a regular expression.
 -   `uri`: (Optional) The property of the Terraform resource to use as the target URI.
 -   `statefile`: (Optional) The name of the local Terraform state file to load, relative to `dir` (defaults to `terraform.tfstate)`.
