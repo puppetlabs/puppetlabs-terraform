@@ -42,7 +42,7 @@ class Terraform < TaskHelper
 
   # Uses the Terraform CLI to pull remote state files
   def load_remote_statefile(opts)
-    dir = File.expand_path(opts[:dir])
+    dir = File.expand_path(opts[:dir], opts[:_boltdir])
 
     begin
       stdout_str, stderr_str, status = Open3.capture3('terraform state pull', chdir: dir)
@@ -65,9 +65,8 @@ class Terraform < TaskHelper
   end
 
   def load_local_statefile(opts)
-    dir = opts[:dir]
     filename = opts.fetch(:statefile, 'terraform.tfstate')
-    File.read(File.expand_path(File.join(dir, filename)))
+    File.read(File.expand_path(File.join(opts[:dir], filename), opts[:_boltdir]))
   rescue StandardError => e
     msg = "Could not load Terraform state file #{filename}: #{e}"
     raise TaskHelper::Error.new(msg, 'bolt-plugin/validation-error')
