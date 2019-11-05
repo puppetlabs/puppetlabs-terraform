@@ -8,15 +8,15 @@
 
 ## Description
 
-The Terraform plugin module supports looking up target objects from a Terraform state file.
+The Terraform plugin module supports looking up target objects from a Terraform state file, applying, destroying and querying outputs from Terraform project directories.
 
 ## Requirements
 
-You will need to have installed `Terraform` on the system you wish to run bolt from. The executalbe must be on the system `$PATH`. 
+You will need to have installed `Terraform` on the system you wish to run bolt from. The executable must be on the system `$PATH`. 
 
-## Usage
+## Inventory plugin usage
 
-The Terraform plugin supports looking up target objects from a Terraform state file. It accepts several fields:
+The `resolve_reference` task supports looking up target objects from a Terraform state file. It accepts several fields:
 
 -   `dir`: The directory containing either a local Terraform state file or Terraform configuration to read remote state from. Relative to the active Boltdir unless absolute path is specified.
 -   `resource_type`: The Terraform resources to match, as a regular expression.
@@ -99,4 +99,59 @@ google_compute_instance.app.1:
   project = cloud-app1
   self_link = https://www.googleapis.com/compute/v1/projects/cloud-app1/zones/us-west1-a/instances/app-1
   zone = us-west1-a
+```
+
+## Provisioning resources 
+
+The `apply` task will apply resources and return the logs printed to stdout. It accepts several fields:
+
+-   `dir`: (Optional) Path to Terraform project directory. Path is relative to CWD, unless an absolute path is specified.
+-   `state`: (Optional) Path to read and save state. Defaults to `terraform.tfstate`. Path is relative to `dir`.
+-   `target`: (Optional) Resource to target. Operation will be limited to this resource and its dependencies. Accepts a single resource string or an array of resources.
+-   `var`: (Optional) Set Terraform variables, expects a hash with key value pairs representing variables and values (NOTE: single quotes `'` are incompatible).
+-   `var_file`: (Optional) Set variables in the Terraform configuration from a file. Path is relative to `dir`.
+
+The `apply` plan will run the `apply` task against the `localhost` target and optionally return the result of the `output` task. It accepts several fields:
+
+-   `dir`: (Optional) Path to Terraform project directory. Path is relative to CWD, unless an absolute path is specified.
+-   `state`: (Optional) Path to read and save state. Defaults to `terraform.tfstate`. Path is relative to `dir`
+-   `target`: (Optional) Resource to target. Operation will be limited to this resource and its dependencies. Accepts a single resource string or an array of resources.
+-   `var`: (Optional) Set Terraform variables, expects a hash with key value pairs representing variables and values (NOTE: single quotes `'` are incompatible).
+-   `var_file`: (Optional) Set variables in the Terraform configuration from a file. Path is relative to `dir`.
+-   `return_output`: (Optional) Return the result of the `output` task (defualts to `false`). 
+
+The `output` task will return the result of executing `terraform output`. It accepts several fields:
+
+-   `dir`: (Optional) Path to Terraform project directory. Path is relative to CWD, unless an absolute path is specified.
+-   `state`: (Optional) Path to read and save state. Defaults to `terraform.tfstate`. Path is relative to `dir`.
+
+## Destroying resources
+
+The `destroy` task will destroy resources and return the logs printed to stdout. It accepts several fields:
+
+-   `dir`: (Optional) Path to Terraform project directory. Path is relative to CWD, unless an absolute path is specified.
+-   `state`: (Optional) Path to read and save state. Defaults to `terraform.tfstate`. Path is relative to `dir`.
+-   `target`: (Optional) Resource to target. Operation will be limited to this resource and its dependencies. Accepts a single resource string or an array of resources.
+-   `var`: (Optional) Set Terraform variables, expects a hash with key value pairs representing variables and values (NOTE: single quotes `'` are incompatible).
+-   `var_file`: (Optional) Set variables in the Terraform configuration from a file. Path is relative to `dir`.
+
+The `destroy` plan will run the `destroy` task against the `localhost` and return it's result. It accepts several fields:
+
+-   `dir`: (Optional) Path to Terraform project directory. Path is relative to CWD, unless an absolute path is specified.
+-   `state`: (Optional) Path to read and save state. Defaults to `terraform.tfstate`. Path is relative to `dir`
+-   `target`: (Optional) Resource to target. Operation will be limited to this resource and its dependencies. Accepts a single resource string or an array of resources.
+-   `var`: (Optional) Set Terraform variables, expects a hash with key value pairs representing variables and values (NOTE: single quotes `'` are incompatible).
+-   `var_file`: (Optional) Set variables in the Terraform configuration from a file. Path is relative to `dir`.
+
+
+### Example
+
+In this example plan, resources are applied and then destroyed during plan execution. The outputs from the `terraform::apply` plan are used to pass as data to a task. 
+
+```puppet
+plan example(TargetSpec $targets){
+  $apply_result = run_plan('terraform::apply', 'dir' => '/home/cas/working_dir/dynamic-inventory-demo', 'return_output' => true)
+  run_task('important::stuff', $targets, 'task_var' => $apply_result)
+  run_plan('destroy', 'dir' => '/home/cas/working_dir/dynamic-inventory-demo')
+}
 ```

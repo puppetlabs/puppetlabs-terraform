@@ -22,5 +22,6 @@ group :development do
   gem "puppet-module-posix-dev-r#{minor_version}",     require: false, platforms: [:ruby]
   gem 'puppet', *location_for(ENV['PUPPET_GEM_VERSION'])
   # Pin puppet blacksmith to avoid failures in forge module push job
+  gem "bolt", "~> 1"
   gem "puppet-blacksmith", "4.1.2"
 end

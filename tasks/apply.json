@@ -1,0 +1,27 @@
+{
+  "description": "Apply an HCL manifest",
+  "files": ["ruby_task_helper/files/task_helper.rb", "terraform/lib/cli_helper.rb"],
+  "input_method": "stdin",
+  "parameters": {
+    "dir": {
+      "type": "Optional[String[1]]",
+      "description": "Path to Terraform project directory. Path is relative to CWD, unless an absolute path is specified."
+    },
+    "state": {
+      "type": "Optional[String[1]]",
+      "description": "Path to read and save state. Defaults to \"terraform.tfstate\". Path is relative to \"dir\""
+    },
+    "target": {
+      "type": "Optional[Variant[String[1], Array[String[1]]]]",
+      "description": "Resource to target. Operation will be limited to this resource and its dependencies. Accepts a single resource string or an array of resources"
+    },
+    "var": {
+      "type": "Optional[Hash]",
+      "description": "Set Terraform variables, expects a hash with key value pairs representing variables and values."
+    },
+    "var_file": {
+      "type": "Optional[String[1]]",
+      "description": "Set variables in the Terraform configuration from a file. Path is relative to \"dir\""
+    }
+  }
+}

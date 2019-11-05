@@ -1,0 +1,15 @@
+{
+  "description": "JSON representation of Terraform outputs",
+  "files": ["ruby_task_helper/files/task_helper.rb", "terraform/lib/cli_helper.rb"],
+  "input_method": "stdin",
+  "parameters": {
+    "dir": {
+      "type": "Optional[String[1]]",
+      "description": "Path to Terraform project directory. Path is relative to CWD, unless an absolute path is specified."
+    },
+    "state": {
+      "type": "Optional[String[1]]",
+      "description": "Path to read and save state. Defaults to \"terraform.tfstate\", Path is relative to \"dir\""
+    }
+  }
+}
