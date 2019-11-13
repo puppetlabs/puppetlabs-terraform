@@ -1,0 +1,5 @@
+fixtures:
+  forge_modules:
+    facts:
+      repo: "puppetlabs/ruby_task_helper"
+      ref: "0.4.0"
