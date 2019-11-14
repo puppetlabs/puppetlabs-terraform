@@ -1,3 +1,15 @@
+## Release 0.3.0
+
+## New features
+
+* **Added `target_mapping` parameter in `resolve_reference` task** ([#1405](https://github.com/puppetlabs/bolt/issues/1405))
+
+  The `resolve_reference` task has a new `target_mapping` parameter that accepts a hash of target attributes and the resource values to populate them with.
+
+* **Added `state` parameter in the `resolve_reference` task** ([#1405](https://github.com/puppetlabs/bolt/issues/1405))
+
+  The `statefile` parameter for the `resolve_reference` task has been replaced with a `state` parameter to maintain consistency among the other tasks and plans in the module.
+
 ## Release 0.2.0
 
 ### Bug fixes

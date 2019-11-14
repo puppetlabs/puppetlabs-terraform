@@ -14,7 +14,8 @@ describe "terraform::apply" do
       'target' => 'foo',
       'var' => { 'foo' => 'bar' },
       'var_file' => 'foo'
-    } }
+    }
+  }
   let(:bolt_config) { { 'modulepath' => RSpec.configuration.module_path } }
   let(:apply_result) { { 'stdout' => 'Terraform logs' } }
   let(:output_result) { { 'my' => 'output' } }
