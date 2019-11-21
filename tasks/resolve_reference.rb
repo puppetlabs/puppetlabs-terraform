@@ -2,32 +2,35 @@
 # frozen_string_literal: true
 
 require_relative '../../ruby_task_helper/files/task_helper.rb'
+require_relative '../../ruby_plugin_helper/lib/plugin_helper.rb'
 require 'json'
 require 'open3'
 
 class Terraform < TaskHelper
-  def resolve_reference(opts)
-    state = load_statefile(opts)
-    resources = extract_resources(state)
-    regex = Regexp.new(opts[:resource_type])
+  include RubyPluginHelper
 
-    resources.select do |name, _resource|
-      name.match?(regex)
-    end.map do |name, resource|
-      target = {}
-      if opts.key?(:uri)
-        uri = lookup(name, resource, opts[:uri])
-        target['uri'] = uri if uri
-      end
-      if opts.key?(:name)
-        real_name = lookup(name, resource, opts[:name])
-        target['name'] = real_name if real_name
-      end
-      if opts.key?(:config)
-        target['config'] = resolve_config(name, resource, opts[:config])
-      end
-      target
+  def resolve_reference(opts)
+    template = opts.delete(:target_mapping) || {}
+    unless template.key?(:uri) || template.key?(:name)
+      msg = "You must provide a 'name' or 'uri' in 'target_mapping' for the Terraform plugin"
+      raise TaskHelper::Error.new(msg, 'bolt-plugin/validation-error')
+    end
+
+    state = load_statefile(opts)
+    regex = Regexp.new(opts[:resource_type])
+    targets = extract_resources(state).map do |type, resource|
+      resource if type.match?(regex)
     end.compact
+
+    attributes = required_data(template)
+    target_data = targets.map do |target|
+      attributes.each_with_object({}) do |attr, acc|
+        attr = attr.first
+        acc[attr] = target.key?(attr) ? target[attr] : nil
+      end
+    end
+
+    target_data.map { |data| apply_mapping(template, data) }
   end
 
   def load_statefile(opts)
@@ -65,7 +68,7 @@ class Terraform < TaskHelper
   end
 
   def load_local_statefile(opts)
-    filename = opts.fetch(:statefile, 'terraform.tfstate')
+    filename = opts.fetch(:state, 'terraform.tfstate')
     File.read(File.expand_path(File.join(opts[:dir], filename), opts[:_boltdir]))
   rescue StandardError => e
     msg = "Could not load Terraform state file #{filename}: #{e}"
@@ -91,69 +94,38 @@ class Terraform < TaskHelper
     else
       state.fetch('modules', {}).flat_map do |mod|
         mod.fetch('resources', {}).map do |name, resource|
-          [name, resource.dig('primary', 'attributes')]
+          data = resource.dig('primary', 'attributes')
+          data = structure_data(data)
+          [name, data]
         end
       end
     end
   end
 
-  # Look up a nested value from the resource attributes. The key is of the
-  # form `foo.bar.0.baz`. For terraform statefile version 3, this will
-  # exactly correspond to a key in the resource. In version 4, it will
-  # correspond to a nested hash entry at {foo: {bar: [{baz: <value>}]}}
-  # For simplicity's sake, we just check both.
-  def lookup(_name, resource, path)
-    segments = path.split('.').map do |segment|
-      begin
-        Integer(segment)
-      rescue ArgumentError
-        segment
+  # Format hashed dot notation into a nested data structure that the ruby plugin helper
+  # can handle. This is needed for tfstate files earlier than version 4, as the keys
+  # use dot notation, which are automatically split by the ruby plugin helper and used
+  # for dot indexing.
+  def structure_data(data)
+    data.each_with_object({}) do |(key, val), acc|
+      # Attempt to coerce each key into an integer, in case it's the index for an array
+      keys = key.split('.').map do |k|
+        begin
+          Integer(k)
+        rescue ArgumentError
+          k
+        end
       end
-    end
-
-    resource[path] || resource.dig(*segments)
-  end
-
-  # Walk the "template" config mapping provided in the plugin config and
-  # replace all values with the corresponding value from the resource
-  # parameters.
-  def resolve_config(name, resource, config_template)
-    walk_vals(config_template) do |value|
-      if value.is_a?(String)
-        lookup(name, resource, value)
-      else
-        value
+      leaf = keys[0...-1].inject(acc) do |a, k|
+        a[k] ||= {}
       end
+      leaf[keys.last] = val
     end
   end
 
-  # Accepts a Data object and returns a copy with all hash and array values
-  # Arrays and hashes including the initial object are modified before
-  # their descendants are.
-  def walk_vals(data, skip_top = false, &block)
-    data = yield(data) unless skip_top
-    if data.is_a? Hash
-      map_vals(data) { |v| walk_vals(v, &block) }
-    elsif data.is_a? Array
-      data.map { |v| walk_vals(v, &block) }
-    else
-      data
-    end
-  end
-
-  def map_vals(hash)
-    hash.each_with_object({}) do |(k, v), acc|
-      acc[k] = yield(v)
-    end
-  end
-
-  def task(opts)
+  def task(opts = {})
     targets = resolve_reference(opts)
-    return { value: targets }
-  rescue TaskHelper::Error => e
-    # ruby_task_helper doesn't print errors under the _error key, so we have to
-    # handle that ourselves
-    return { _error: e.to_h }
+    { value: targets }
   end
 end
 

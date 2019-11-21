@@ -5,6 +5,7 @@ rvm:
 
 before_install:
 - git clone https://github.com/puppetlabs/puppetlabs-ruby_task_helper ../ruby_task_helper
+- git clone https://github.com/puppetlabs/puppetlabs-ruby_plugin_helper ../ruby_plugin_helper
 - curl -fSL "https://releases.hashicorp.com/terraform/0.12.13/terraform_0.12.13_linux_amd64.zip" -o terraform.zip
 - sudo unzip terraform.zip -d /opt/terraform
 - sudo ln -s /opt/terraform/terraform /usr/bin/terraform

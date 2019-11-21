@@ -20,13 +20,11 @@ The `resolve_reference` task supports looking up target objects from a Terraform
 
 -   `dir`: The directory containing either a local Terraform state file or Terraform configuration to read remote state from. Relative to the active Boltdir unless absolute path is specified.
 -   `resource_type`: The Terraform resources to match, as a regular expression.
--   `uri`: (Optional) The property of the Terraform resource to use as the target URI.
--   `statefile`: (Optional) The name of the local Terraform state file to load, relative to `dir` (defaults to `terraform.tfstate)`.
--   `name`: (Optional) The property of the Terraform resource to use as the target name.
--   `config`: A Bolt config map where each value is the Terraform property to use for that config setting.
+-   `state`: (Optional) The name of the local Terraform state file to load, relative to `dir` (defaults to `terraform.tfstate)`.
 -   `backend`: (Optional) The type of backend to load the state form, either `remote` or `local` (defaults to `local`).
+-   `target_mapping`: A hash of target attributes to populate with resource values (e.g. `target_mapping: { name: 'id' }`).
 
-Either `uri` or `name` is required. If only `uri` is set, the value of `uri` is used as the `name`.
+The `target_mapping` parameter requires either a `uri` or `name` field. If only `uri` is set, the value of `uri` is used as the `name`.
 
 ### Examples
 
@@ -37,11 +35,13 @@ groups:
       - _plugin: terraform
         dir: /path/to/terraform/project1
         resource_type: google_compute_instance.web
-        uri: network_interface.0.access_config.0.nat_ip
+        target_mapping:
+          uri: network_interface.0.access_config.0.nat_ip
       - _plugin: terraform
         dir: /path/to/terraform/project2
         resource_type: aws_instance.web
-        uri: public_ip
+        target_mapping:
+          uri: public_ip
 ```
 
 Multiple resources with the same name are identified as <resource>.0, <resource>.1, etc.
