@@ -20,8 +20,8 @@
       "description": "Set Terraform variables, expects a hash with key value pairs representing variables and values."
     },
     "var_file": {
-      "type": "Optional[String[1]]",
-      "description": "Set variables in the Terraform configuration from a file. Path is relative to \"dir\""
+      "type": "Optional[Variant[String[1], Array[String[1]]]]",
+      "description": "Set variables in the Terraform configuration from a file. Path is relative to \"dir\". Accepts a single var-file paths or an array of paths"
     }
   }
 }
