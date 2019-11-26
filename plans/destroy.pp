@@ -3,7 +3,7 @@ plan terraform::destroy(
 	Optional[String[1]] $state = undef,
 	Optional[Variant[String[1], Array[String[1]]]] $target = undef,
 	Optional[Hash] $var = undef,
-	Optional[String[1]] $var_file = undef
+	Optional[Variant[String[1], Array[String[1]]]] $var_file = undef
   ) {
   	
   $opts = {

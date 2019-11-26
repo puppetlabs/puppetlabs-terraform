@@ -34,7 +34,11 @@ module CliHelper
 
       opts[:var].each { |k, v| cli_opts << "-var '#{k}=#{v}'" } if opts[:var]
 
-      cli_opts << "-var-file=#{File.expand_path(opts[:var_file], dir)}" if opts[:var_file]
+      if opts[:var_file]
+        var_file_paths = opts[:var_file].is_a?(Array) ? opts[:var_file] : Array(opts[:var_file])
+        var_file_paths.each { |path| cli_opts << "-var-file=#{File.expand_path(path, dir)}" }
+      end
+
       cli_opts.join(' ')
     end
   end
