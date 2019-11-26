@@ -10,6 +10,12 @@
 
   The `statefile` parameter for the `resolve_reference` task has been replaced with a `state` parameter to maintain consistency among the other tasks and plans in the module.
 
+### Bug fixes
+
+* **Raise error when remote state cannot be loaded** ([#1436](https://github.com/puppetlabs/bolt/issues/1436))
+
+  When attempting to load remote state from a non-existent state file, `terraform` would return a `nil` value which would be loaded into the inventory and cause Bolt to error. The `terraform` plugin now checks whether the attempt to load remote state returned any data and errors if it did not.
+
 ## Release 0.2.0
 
 ### Bug fixes

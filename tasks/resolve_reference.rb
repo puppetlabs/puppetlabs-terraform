@@ -58,9 +58,9 @@ class Terraform < TaskHelper
       raise TaskHelper::Error.new(msg, 'bolt-plugin/validation-error')
     end
 
-    unless status.success?
+    unless status.success? && !stdout_str.empty?
       err = stdout_str + stderr_str
-      msg = "Could not pull Terraform remote state file for #{opts[:dir]}:\n#{err}"
+      msg = "Could not pull Terraform remote state file for #{dir}:\n#{err}"
       raise TaskHelper::Error.new(msg, 'bolt-plugin/validation-error')
     end
 
@@ -71,7 +71,7 @@ class Terraform < TaskHelper
     filename = opts.fetch(:state, 'terraform.tfstate')
     File.read(File.expand_path(File.join(opts[:dir], filename), opts[:_boltdir]))
   rescue StandardError => e
-    msg = "Could not load Terraform state file #{filename}: #{e}"
+    msg = "Could not load Terraform state file #{filename}:\n#{e}"
     raise TaskHelper::Error.new(msg, 'bolt-plugin/validation-error')
   end
 
