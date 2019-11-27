@@ -107,6 +107,7 @@ The `apply` task will apply resources and return the logs printed to stdout. It 
 
 -   `dir`: (Optional) Path to Terraform project directory. Path is relative to CWD, unless an absolute path is specified.
 -   `state`: (Optional) Path to read and save state. Defaults to `terraform.tfstate`. Path is relative to `dir`.
+-   `state_out`: (Optional) Path to write state to that is different than `state`. This can be used to preserve the old state. Path is relative to `dir`.
 -   `target`: (Optional) Resource to target. Operation will be limited to this resource and its dependencies. Accepts a single resource string or an array of resources.
 -   `var`: (Optional) Set Terraform variables, expects a hash with key value pairs representing variables and values (NOTE: single quotes `'` are incompatible).
 -   `var_file`: (Optional) Set variables in the Terraform configuration from a file. Path is relative to `dir`.
@@ -114,7 +115,8 @@ The `apply` task will apply resources and return the logs printed to stdout. It 
 The `apply` plan will run the `apply` task against the `localhost` target and optionally return the result of the `output` task. It accepts several fields:
 
 -   `dir`: (Optional) Path to Terraform project directory. Path is relative to CWD, unless an absolute path is specified.
--   `state`: (Optional) Path to read and save state. Defaults to `terraform.tfstate`. Path is relative to `dir`
+-   `state`: (Optional) Path to read and save state. Defaults to `terraform.tfstate`. Path is relative to `dir`.
+-   `state_out`: (Optional) Path to write state to that is different than `state`. This can be used to preserve the old state. Path is relative to `dir`.
 -   `target`: (Optional) Resource to target. Operation will be limited to this resource and its dependencies. Accepts a single resource string or an array of resources.
 -   `var`: (Optional) Set Terraform variables, expects a hash with key value pairs representing variables and values (NOTE: single quotes `'` are incompatible).
 -   `var_file`: (Optional) Set variables in the Terraform configuration from a file. Path is relative to `dir`.
@@ -131,6 +133,7 @@ The `destroy` task will destroy resources and return the logs printed to stdout.
 
 -   `dir`: (Optional) Path to Terraform project directory. Path is relative to CWD, unless an absolute path is specified.
 -   `state`: (Optional) Path to read and save state. Defaults to `terraform.tfstate`. Path is relative to `dir`.
+-   `state_out`: (Optional) Path to write state to that is different than `state`. This can be used to preserve the old state. Path is relative to `dir`.
 -   `target`: (Optional) Resource to target. Operation will be limited to this resource and its dependencies. Accepts a single resource string or an array of resources.
 -   `var`: (Optional) Set Terraform variables, expects a hash with key value pairs representing variables and values (NOTE: single quotes `'` are incompatible).
 -   `var_file`: (Optional) Set variables in the Terraform configuration from a file. Path is relative to `dir`.
@@ -138,7 +141,8 @@ The `destroy` task will destroy resources and return the logs printed to stdout.
 The `destroy` plan will run the `destroy` task against the `localhost` and return it's result. It accepts several fields:
 
 -   `dir`: (Optional) Path to Terraform project directory. Path is relative to CWD, unless an absolute path is specified.
--   `state`: (Optional) Path to read and save state. Defaults to `terraform.tfstate`. Path is relative to `dir`
+-   `state`: (Optional) Path to read and save state. Defaults to `terraform.tfstate`. Path is relative to `dir`.
+-   `state_out`: (Optional) Path to write state to that is different than `state`. This can be used to preserve the old state. Path is relative to `dir`.
 -   `target`: (Optional) Resource to target. Operation will be limited to this resource and its dependencies. Accepts a single resource string or an array of resources.
 -   `var`: (Optional) Set Terraform variables, expects a hash with key value pairs representing variables and values (NOTE: single quotes `'` are incompatible).
 -   `var_file`: (Optional) Set variables in the Terraform configuration from a file. Path is relative to `dir`.

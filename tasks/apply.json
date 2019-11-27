@@ -22,6 +22,10 @@
     "var_file": {
       "type": "Optional[Variant[String[1], Array[String[1]]]]",
       "description": "Set variables in the Terraform configuration from a file. Path is relative to \"dir\". Accepts a single var-file path or an array of paths"
+    },
+    "state_out": {
+      "type": "Optional[String[1]]",
+      "description": "Path to write state to that is different than \"state\". This can be used to preserve the old state."
     }
   }
 }
