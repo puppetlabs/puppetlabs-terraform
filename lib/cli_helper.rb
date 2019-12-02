@@ -26,6 +26,7 @@ module CliHelper
     def transcribe_to_cli(opts, dir = nil)
       cli_opts = %w[-auto-approve -no-color -input=false]
       cli_opts << "-state=#{File.expand_path(opts[:state], dir)}" if opts[:state]
+      cli_opts << "-state-out=#{File.expand_path(opts[:state_out], dir)}" if opts[:state_out]
 
       if opts[:target]
         resources = opts[:target].is_a?(Array) ? opts[:target] : Array(opts[:target])

@@ -11,6 +11,7 @@ describe "terraform::destroy" do
     {
       'dir' => 'foo',
       'state' => 'foo',
+      'state_out' => 'foo',
       'target' => 'foo',
       'var' => { 'foo' => 'bar' },
       'var_file' => 'foo'
