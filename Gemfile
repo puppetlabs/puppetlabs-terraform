@@ -21,7 +21,10 @@ group :development do
   gem "puppet-module-posix-default-r#{minor_version}", require: false, platforms: [:ruby]
   gem "puppet-module-posix-dev-r#{minor_version}",     require: false, platforms: [:ruby]
   gem 'puppet', *location_for(ENV['PUPPET_GEM_VERSION'])
+  # Automatic jenkins job to push to forge requires puppet 5 which is incompatible with modern bolt
+  if ENV['GEM_BOLT']
+    gem 'bolt', '~> 1', require: false
+  end
   # Pin puppet blacksmith to avoid failures in forge module push job
-  gem "bolt", "~> 1"
   gem "puppet-blacksmith", "4.1.2"
 end
