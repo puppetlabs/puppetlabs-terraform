@@ -13,9 +13,10 @@ describe 'terraform::apply' do
   let(:var_file) { 'tfvar_alternate.tfvars' }
 
   before(:all) do
+    bolt_config = { 'modulepath' => RSpec.configuration.module_path }
     terraform_dir = File.join(RSpec.configuration.module_path, '../docker_provision')
-    _out, _err, status = Open3.capture3('terraform init', chdir: terraform_dir)
-    expect(status).to eq(0)
+    result = run_task('terraform::initialize', 'localhost', { 'dir' => terraform_dir }, config: bolt_config)[0]
+    expect(result['status']).to eq('success')
   end
 
   after(:each) do
