@@ -12,13 +12,13 @@ class TerraformInitialize < TaskHelper
     dir = File.expand_path(opts[:dir]) if opts[:dir]
     cli_opts = cli_opts.join(' ')
 
-    _, _, check_init_status = if dir
+    stdout, stderr, check_init_status = if dir
                                 CliHelper.execute("terraform providers", dir: dir)
                               else
                                 CliHelper.execute("terraform providers")
                               end
-
     if check_init_status != 0 || opts[:reinit]
+
       stdout_str, stderr_str, status = if dir
                                          CliHelper.execute("terraform init #{cli_opts}", dir: dir)
                                        else

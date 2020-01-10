@@ -13,10 +13,12 @@ describe 'terraform::apply' do
   let(:var_file) { 'tfvar_alternate.tfvars' }
 
   before(:all) do
-    bolt_config = { 'modulepath' => RSpec.configuration.module_path }
+    config = { 'modulepath' => RSpec.configuration.module_path }
     terraform_dir = File.join(RSpec.configuration.module_path, '../docker_provision')
-    result = run_task('terraform::initialize', 'localhost', { 'dir' => terraform_dir }, config: bolt_config)[0]
-    expect(result['status']).to eq('success')
+    puts terraform_dir
+    result = run_task('terraform::initialize', 'localhost', { 'dir' => terraform_dir, 'reinit' => true }, config: config)
+    puts result
+    expect(result[0]['status']).to eq('success')
   end
 
   after(:each) do
@@ -25,8 +27,15 @@ describe 'terraform::apply' do
     expect(status).to eq(0)
   end
 
+  after(:all) do
+    terraform_dir = File.join(RSpec.configuration.module_path, '../docker_provision')
+    _out, _err, status = Open3.capture3('rm -rf .terraform', chdir: terraform_dir)
+    expect(status).to eq(0)
+  end
+
   it "applies terraform manifest and returns logs" do
     result = run_plan('terraform::apply', 'dir' => terraform_dir)
+    puts result
     expect(result['status']).to eq('success')
     expect(result['value'][0]['result']['stdout'])
       .to match(/Apply complete! Resources: 2 added, 0 changed, 0 destroyed./)
@@ -34,6 +43,7 @@ describe 'terraform::apply' do
 
   it "applies terraform manifest and returns output" do
     result = run_plan('terraform::apply', 'dir' => terraform_dir, 'return_output' => true)
+    puts result
     expect(result['status']).to eq('success')
     expect(result['value']['terraform_output']['value']).to eq(expected_default_output)
   end
@@ -46,6 +56,7 @@ describe 'terraform::apply' do
       'var_file' => var_file
     }
     result = run_plan('terraform::apply', params)
+    puts result
     expect(result['status']).to eq('success')
     expect(result['value']['terraform_output']['value']).to eq(expected_modified_output)
   end
