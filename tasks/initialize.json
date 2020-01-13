@@ -6,10 +6,6 @@
     "dir": {
       "type": "Optional[String[1]]",
       "description": "Path to Terraform project directory. Path is relative to CWD, unless an absolute path is specified."
-    },
-    "reinit": {
-      "type": "Optional[Boolean]",
-      "description": "Parameter that forces the re-initialization of the Terraform project directory"
     }
   }
 }

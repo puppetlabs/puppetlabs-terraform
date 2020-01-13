@@ -12,26 +12,20 @@ class TerraformInitialize < TaskHelper
     dir = File.expand_path(opts[:dir]) if opts[:dir]
     cli_opts = cli_opts.join(' ')
 
-    _, _, check_init_status = if dir
-                                CliHelper.execute("terraform providers", dir: dir)
-                              else
-                                CliHelper.execute("terraform providers")
-                              end
+    if dir ? Dir.exist?("#{dir}/.terraform") : Dir.exist?(File.expand_path('.terraform'))
+      return { 'stdout': 'Terraform directory already initialized' }
+    end
 
-    if check_init_status != 0 || opts[:reinit]
-      stdout_str, stderr_str, status = if dir
-                                         CliHelper.execute("terraform init #{cli_opts}", dir: dir)
-                                       else
-                                         CliHelper.execute("terraform init #{cli_opts}")
-                                       end
+    stdout_str, stderr_str, status = if dir
+                                       CliHelper.execute("terraform init #{cli_opts}", dir: dir)
+                                     else
+                                       CliHelper.execute("terraform init #{cli_opts}")
+                                     end
 
-      if status == 0
-        { 'stdout': stdout_str }
-      else
-        raise TaskHelper::Error.new(_(stderr_str), 'terraform/init-error')
-      end
+    if status == 0
+      return { 'stdout': stdout_str }
     else
-      { 'stdout': "Terraform directory already initialized" }
+      raise TaskHelper::Error.new(_(stderr_str), 'terraform/init-error')
     end
   end
 
