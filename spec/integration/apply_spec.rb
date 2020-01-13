@@ -25,6 +25,12 @@ describe 'terraform::apply' do
     expect(status).to eq(0)
   end
 
+  after(:all) do
+    terraform_dir = File.join(RSpec.configuration.module_path, '../docker_provision')
+    _out, _err, status = Open3.capture3('rm -rf .terraform', chdir: terraform_dir)
+    expect(status).to eq(0)
+  end
+
   it "applies terraform manifest and returns logs" do
     result = run_plan('terraform::apply', 'dir' => terraform_dir)
     expect(result['status']).to eq('success')
