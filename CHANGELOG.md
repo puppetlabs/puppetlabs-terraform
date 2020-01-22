@@ -1,3 +1,11 @@
+## Release 0.4.0
+
+## New features
+
+* **Added `initialize` task**
+
+  There has been a simple `initialize` task added to the module that can be used to ensure Terraform project directories are initialized with required modules and providers installed so your code runs without manually running `terraform init` before executing a plan.
+
 ## Release 0.3.0
 
 ## New features
