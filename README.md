@@ -103,7 +103,7 @@ google_compute_instance.app.1:
 
 ## Setting up Terraform project directories
 
-The `initialize` task will setup a Terraform project directory with all the appropriate modules and providers needed to execute your configuration
+The `initialize` task will setup a Terraform project directory with all the appropriate modules and providers needed to execute your configuration. It accepts a single field:
 
 -   `dir`: (Optional) Path to Terraform project directory. Path is relative to CWD, unless an absolute path is specified.
 
