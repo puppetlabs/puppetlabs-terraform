@@ -77,6 +77,8 @@ describe 'terraform::resolve_reference' do
       terraform_dir = File.join(RSpec.configuration.module_path, '../docker_provision')
       _out, _err, status = Open3.capture3('terraform destroy -auto-approve', chdir: terraform_dir)
       expect(status).to eq(0)
+      _out, _err, status = Open3.capture3('rm -rf .terraform', chdir: terraform_dir)
+      expect(status).to eq(0)
     end
 
     it 'resolves references from an applied terraform manifest' do

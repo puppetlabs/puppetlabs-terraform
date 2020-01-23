@@ -101,6 +101,12 @@ google_compute_instance.app.1:
   zone = us-west1-a
 ```
 
+## Setting up Terraform project directories
+
+The `initialize` task will setup a Terraform project directory with all the appropriate modules and providers needed to execute your configuration. It accepts a single field:
+
+-   `dir`: (Optional) Path to Terraform project directory. Path is relative to CWD, unless an absolute path is specified.
+
 ## Provisioning resources 
 
 The `apply` task will apply resources and return the logs printed to stdout. It accepts several fields:
@@ -154,6 +160,7 @@ In this example plan, resources are applied and then destroyed during plan execu
 
 ```puppet
 plan example(TargetSpec $targets){
+  run_task('terraform::initialize', 'dir' => '/home/cas/working_dir/dynamic-inventory-demo')
   $apply_result = run_plan('terraform::apply', 'dir' => '/home/cas/working_dir/dynamic-inventory-demo', 'return_output' => true)
   run_task('important::stuff', $targets, 'task_var' => $apply_result)
   run_plan('destroy', 'dir' => '/home/cas/working_dir/dynamic-inventory-demo')

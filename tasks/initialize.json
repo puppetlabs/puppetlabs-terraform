@@ -1,0 +1,11 @@
+{
+  "description": "Initialize a Terraform project directory",
+  "files": ["ruby_task_helper/files/task_helper.rb", "terraform/lib/cli_helper.rb"],
+  "input_method": "stdin",
+  "parameters": {
+    "dir": {
+      "type": "Optional[String[1]]",
+      "description": "Path to Terraform project directory. Path is relative to CWD, unless an absolute path is specified."
+    }
+  }
+}
