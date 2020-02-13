@@ -1,6 +1,14 @@
+## Release 0.5.0
+
+### New features
+
+* **Set `resolve_reference` task to private** ([#14](https://github.com/puppetlabs/puppetlabs-terraform/pulls/14))
+
+    The `resolve_reference` task has been set to `private` so it no longer appears in UI lists.
+
 ## Release 0.4.0
 
-## New features
+### New features
 
 * **Added `initialize` task**
 
@@ -8,7 +16,7 @@
 
 ## Release 0.3.0
 
-## New features
+### New features
 
 * **Added `target_mapping` parameter in `resolve_reference` task** ([#1405](https://github.com/puppetlabs/bolt/issues/1405))
 
