@@ -87,9 +87,9 @@ describe Terraform do
       expect(targets).to be_empty
     end
 
-    it 'fails if the state file does not exist' do
-      expect { subject.resolve_reference(opts.merge(state: 'nonexistent.tfstate')) }
-        .to raise_error(/Could not load Terraform state file nonexistent.tfstate/)
+    it 'returns nothing if the state file does not exist' do
+      targets = subject.resolve_reference(opts.merge(state: 'nonexistent.tfstate'))
+      expect(targets).to be_empty
     end
   end
 
