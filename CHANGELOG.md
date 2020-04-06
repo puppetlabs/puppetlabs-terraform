@@ -6,6 +6,13 @@
 
     The `resolve_reference` task has been set to `private` so it no longer appears in UI lists.
 
+### Bug fixes
+
+* **Inventory plugin raised an exception when no statefile was found** ([#16](https://github.com/puppetlabs/puppetlabs-terraform/pulls/16))
+
+  The `resolve_reference` task would error when no statefile was found. It now returns an empty inventory
+  instead.
+
 ## Release 0.4.0
 
 ### New features
