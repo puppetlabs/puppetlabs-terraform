@@ -70,6 +70,9 @@ class Terraform < TaskHelper
   def load_local_statefile(opts)
     filename = opts.fetch(:state, 'terraform.tfstate')
     File.read(File.expand_path(File.join(opts[:dir], filename), opts[:_boltdir]))
+  rescue Errno::ENOENT
+    # No statefile, no resources. Return empty-like state data
+    { 'version' => 4, 'resources' => [], 'outputs' => {} }.to_json
   rescue StandardError => e
     msg = "Could not load Terraform state file #{filename}:\n#{e}"
     raise TaskHelper::Error.new(msg, 'bolt-plugin/validation-error')
