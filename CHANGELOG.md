@@ -1,3 +1,9 @@
+## Release 0.6.0
+
+### New features
+
+* **Bump maximum Puppet version to include 7.x** ([#22](https://github.com/puppetlabs/puppetlabs-terraform/pull/22))
+
 ## Release 0.5.0
 
 ### New features
