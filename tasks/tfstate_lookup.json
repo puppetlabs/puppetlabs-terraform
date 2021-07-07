@@ -1,8 +1,7 @@
 {
-  "description": "Generate targets from Terraform Statefile",
+  "description": "Look up resource attributes from tfstate",
   "files": [
     "ruby_task_helper/files/task_helper.rb",
-    "ruby_plugin_helper/lib/plugin_helper.rb",
     "terraform/lib/statefile_helper.rb"
   ],
   "input_method": "stdin",
@@ -19,9 +18,9 @@
     "backend": {
       "type": "Optional[String[1]]"
     },
-    "target_mapping": {
-      "type": "Hash"
+    "attribute_path": {
+      "type": "Optional[String]",
+      "description": "Path to specific atrribute in attribute array, example: 0.ip.external"
     }
-  },
-  "private": true
+  }
 }
