@@ -23,6 +23,6 @@ describe "terraform::destroy" do
   it 'should return logs from destroy task' do
     allow_task('terraform::destroy').with_params(params).always_return(destroy_result)
     result = run_plan('terraform::destroy', params)
-    expect(result.value.to_data[0]['result']).to eq(destroy_result)
+    expect(result.value[0].value).to eq(destroy_result)
   end
 end

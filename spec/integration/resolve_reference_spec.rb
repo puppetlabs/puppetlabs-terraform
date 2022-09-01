@@ -83,12 +83,12 @@ describe 'terraform::resolve_reference' do
 
     it 'resolves references from an applied terraform manifest' do
       result = run_task('terraform::resolve_reference', 'localhost', params)
-      expect(result.first['result']).to eq(expected_result)
+      expect(result[0]['value']).to eq(expected_result)
     end
 
     it 'runs a command on a discovered target' do
       result = run_command('whoami', 'terraform', inventory: inventory)
-      expect(result.first['result']['stdout']).to match(/root/)
+      expect(result[0]['value']['stdout']).to match(/root/)
     end
   end
 

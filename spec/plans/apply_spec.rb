@@ -24,15 +24,24 @@ describe "terraform::apply" do
   it 'should return logs when $output is not set' do
     allow_task('terraform::apply').with_params(params).always_return(apply_result)
     result = run_plan('terraform::apply', params)
-    expect(result.value.to_data[0]['result']).to eq(apply_result)
+    expect(result.value[0].value).to eq(apply_result)
   end
 
   it 'should return output when $output is set' do
     plan_params = params.merge('return_output' => true)
-    output_task_params = { 'dir' => 'foo', 'state' => 'foo' }
+    sub_task_params = { 'dir' => 'foo', 'state' => 'foo' }
     allow_task('terraform::apply').with_params(params).always_return(apply_result)
-    allow_task('terraform::output').with_params(output_task_params).always_return(output_result)
+    allow_task('terraform::output').with_params(sub_task_params).always_return(output_result)
     result = run_plan('terraform::apply', plan_params)
     expect(result.value).to eq(output_result)
+  end
+
+  it 'should refresh state when $refresh_state is set' do
+    plan_params = params.merge('refresh_state' => true)
+    sub_task_params = { 'dir' => 'foo', 'state' => 'foo' }
+    allow_task('terraform::apply').with_params(params).always_return(apply_result)
+    allow_task('terraform::refresh').with_params(sub_task_params).always_return(apply_result)
+    result = run_plan('terraform::apply', plan_params).value[0]
+    expect(result.value).to eq(apply_result)
   end
 end
