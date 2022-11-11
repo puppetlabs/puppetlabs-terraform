@@ -34,7 +34,7 @@ describe 'terraform::apply' do
   it "applies terraform manifest and returns logs" do
     result = run_plan('terraform::apply', 'dir' => terraform_dir)
     expect(result['status']).to eq('success')
-    expect(result['value'][0]['result']['stdout'])
+    expect(result['value'][0]['value']['stdout'])
       .to match(/Apply complete! Resources: 2 added, 0 changed, 0 destroyed./)
   end
 
