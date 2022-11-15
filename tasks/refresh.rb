@@ -28,4 +28,4 @@ class TerraformRefresh < TaskHelper
   end
 end
 
-TerraformOutput.run if $PROGRAM_NAME == __FILE__
+TerraformRefresh.run if $PROGRAM_NAME == __FILE__
