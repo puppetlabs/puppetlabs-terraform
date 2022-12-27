@@ -10,6 +10,10 @@
     "state": {
       "type": "Optional[String[1]]",
       "description": "Path to read and save state. Defaults to \"terraform.tfstate\", Path is relative to \"dir\""
+    },
+    "var_file": {
+      "type": "Optional[Variant[String[1], Array[String[1]]]]",
+      "description": "Set variables in the Terraform configuration from a file. Path is relative to \"dir\". Accepts a single var-file path or an array of paths"
     }
   }
 }

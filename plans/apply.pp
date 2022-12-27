@@ -30,7 +30,7 @@ plan terraform::apply(
   }
 
   if $refresh_state {
-    run_task('terraform::refresh', 'localhost', $post_apply_opts)
+    run_task('terraform::refresh', 'localhost', $post_apply_opts + { 'var_file' => $var_file })
   }
 
   $output = run_task('terraform::output', 'localhost', $post_apply_opts)

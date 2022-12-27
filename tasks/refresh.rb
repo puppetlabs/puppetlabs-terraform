@@ -9,6 +9,7 @@ class TerraformRefresh < TaskHelper
     cli_opts = %w[-no-color -json]
     dir = File.expand_path(opts[:dir]) if opts[:dir]
     cli_opts << "-state=#{File.expand_path(opts[:state], dir)}" if opts[:state]
+    cli_opts << "-var-file=#{File.expand_path(opts[:var_file], dir)}" if opts[:var_file]
     cli_opts = cli_opts.join(' ')
 
     stdout_str, stderr_str, status = if dir
