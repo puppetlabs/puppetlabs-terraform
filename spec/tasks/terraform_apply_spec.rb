@@ -12,7 +12,7 @@ describe TerraformApply do
     let(:expected_dir) { File.join(Dir.pwd, dir) }
     let(:opts) { {} }
     let(:success_result) { { stdout: terraform_out } }
-    let(:base_cli) { %w[terraform apply -auto-approve -no-color -input=false] }
+    let(:base_cli) { %w[terraform apply -no-color -auto-approve -input=false] }
     let(:additional_cli) { [] }
     let(:cli) { base_cli.concat(additional_cli).join(' ') }
 

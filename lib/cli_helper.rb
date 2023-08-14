@@ -23,8 +23,9 @@ module CliHelper
     end
 
     # The apply and destroy CLI opts map from the same task opts to cli opts, share that code.
-    def transcribe_to_cli(opts, dir = nil)
-      cli_opts = %w[-auto-approve -no-color -input=false]
+    def transcribe_to_cli(opts, dir = nil, required = [])
+      cli_opts = %w[-no-color]
+      cli_opts.push(*required)
       cli_opts << "-state=#{File.expand_path(opts[:state], dir)}" if opts[:state]
       cli_opts << "-state-out=#{File.expand_path(opts[:state_out], dir)}" if opts[:state_out]
 

@@ -6,16 +6,15 @@ require_relative '../lib/cli_helper.rb'
 
 class TerraformRefresh < TaskHelper
   def output(opts)
-    cli_opts = %w[-no-color -json]
     dir = File.expand_path(opts[:dir]) if opts[:dir]
-    cli_opts << "-state=#{File.expand_path(opts[:state], dir)}" if opts[:state]
-    cli_opts = cli_opts.join(' ')
+    cli_opts = CliHelper.transcribe_to_cli(opts, dir)
 
     stdout_str, stderr_str, status = if dir
                                        CliHelper.execute("terraform refresh #{cli_opts}", dir: dir)
                                      else
                                        CliHelper.execute("terraform refresh #{cli_opts}")
                                      end
+
     if status == 0
       { 'stdout': stdout_str }
     else

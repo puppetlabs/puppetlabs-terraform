@@ -9,7 +9,7 @@ require 'open3'
 class TerraformApply < TaskHelper
   def apply(opts)
     dir = File.expand_path(opts[:dir]) if opts[:dir]
-    cli_opts = CliHelper.transcribe_to_cli(opts, dir)
+    cli_opts = CliHelper.transcribe_to_cli(opts, dir, %w[-auto-approve -input=false])
 
     stdout_str, stderr_str, status = if dir
                                        CliHelper.execute("terraform apply #{cli_opts}", dir: dir)

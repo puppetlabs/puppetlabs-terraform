@@ -8,13 +8,12 @@ require 'open3'
 
 class TerraformInitialize < TaskHelper
   def init(opts)
-    cli_opts = %w[-no-color]
     dir = File.expand_path(opts[:dir]) if opts[:dir]
-    cli_opts = cli_opts.join(' ')
-
     if dir ? Dir.exist?("#{dir}/.terraform") : Dir.exist?(File.expand_path('.terraform'))
       return { 'stdout': 'Terraform directory already initialized' }
     end
+
+    cli_opts = CliHelper.transcribe_to_cli(opts, dir)
 
     stdout_str, stderr_str, status = if dir
                                        CliHelper.execute("terraform init #{cli_opts}", dir: dir)
