@@ -16,7 +16,7 @@ describe TerraformRefresh do
     let(:additional_opts) { {} }
     let(:opts) { base_opts.merge(additional_opts) }
     let(:success_result) { { stdout: terraform_out } }
-    let(:base_cli) { %w[terraform refresh -no-color -json] }
+    let(:base_cli) { %w[terraform refresh -no-color] }
     let(:additional_cli) { [] }
     let(:cli) { base_cli.concat(additional_cli).join(' ') }
 
