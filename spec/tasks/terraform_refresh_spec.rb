@@ -46,5 +46,61 @@ describe TerraformRefresh do
         expect(result).to eq(success_result)
       end
     end
+
+    context "with single target resource option" do
+      let(:target) { "aws.t1micro" }
+      let(:opts) { { target: target } }
+      let(:additional_cli) { ["-target=#{target}"] }
+      it 'specifieds single target' do
+        expect(Open3).to receive(:capture3).with(cli).and_return(terraform_response)
+        result = subject.output(opts)
+        expect(result).to eq(success_result)
+      end
+    end
+
+    context "with multiple target resource options" do
+      let(:target) { %w[aws.t1micro aws.t2macro] }
+      let(:opts) { super().merge(target: target) }
+      let(:additional_cli) { target.map { |r| "-target=#{r}" } }
+      it 'specifies multiple targets' do
+        expect(Open3).to receive(:capture3).with(cli).and_return(terraform_response)
+        result = subject.output(opts)
+        expect(result).to eq(success_result)
+      end
+    end
+
+    context "with single var option" do
+      let(:var) { { 'foo' => 'bar' } }
+      let(:opts) { super().merge(var: var) }
+      let(:additional_cli) { ["-var 'foo=bar'"] }
+      it 'specifieds single var' do
+        expect(Open3).to receive(:capture3).with(cli).and_return(terraform_response)
+        result = subject.output(opts)
+        expect(result).to eq(success_result)
+      end
+    end
+
+    context "with multiple var options" do
+      let(:var) { { 'foo' => 'bar', 'baz' => 'foo' } }
+      let(:opts) { super().merge(var: var) }
+      let(:additional_cli) { var.map { |k, v| "-var '#{k}=#{v}'" } }
+      it 'specifies multiple vars' do
+        expect(Open3).to receive(:capture3).with(cli).and_return(terraform_response)
+        result = subject.output(opts)
+        expect(result).to eq(success_result)
+      end
+    end
+
+    context "with var_file option" do
+      let(:var_file) { "foo.tfvars" }
+      let(:dir) { "foo/bar" }
+      let(:opts) { super().merge(var_file: var_file, dir: dir) }
+      let(:additional_cli) { ["-var-file=#{File.expand_path(File.join(dir, var_file))}"] }
+      it 'provides abosulute path for var-file relative to dir' do
+        expect(Open3).to receive(:capture3).with(cli, chdir: expected_dir).and_return(terraform_response)
+        result = subject.output(opts)
+        expect(result).to eq(success_result)
+      end
+    end
   end
 end
