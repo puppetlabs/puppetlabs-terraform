@@ -1,0 +1,14 @@
+---
+.devcontainer:
+  delete: true
+appveyor.yml:
+  delete: true
+.gitlab-ci.yml:
+  delete: true
+.travis.yml:
+  delete: true
+.gitignore:
+  paths:
+    - /.devcontainer
+    - /spec/fixtures/docker_provision/.terraform*
+    - /spec/fixtures/docker_provision/terraform.tfstate*
