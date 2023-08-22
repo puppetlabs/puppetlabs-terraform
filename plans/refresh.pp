@@ -7,14 +7,13 @@ plan terraform::refresh(
   Optional[Variant[String[1], Array[String[1]]]] $var_file      = undef,
   Optional[Boolean]                              $return_output = false,
 ) {
-
   $opts = {
     'dir'       => $dir,
     'state'     => $state,
     'state_out' => $state_out,
     'target'    => $target,
     'var'       => $var,
-    'var_file'  => $var_file
+    'var_file'  => $var_file,
   }
 
   $refresh_logs =  run_task('terraform::refresh', 'localhost', $opts)
@@ -25,7 +24,7 @@ plan terraform::refresh(
 
   $output_opts = {
     'dir'   => $dir,
-    'state' => $state
+    'state' => $state,
   }
 
   $output = run_task('terraform::output', 'localhost', $output_opts)

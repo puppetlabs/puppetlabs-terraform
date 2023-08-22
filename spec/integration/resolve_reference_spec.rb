@@ -16,7 +16,7 @@ describe 'terraform::resolve_reference' do
     {
       'value' => [
         { 'uri' => '0.0.0.0',
-          'config' => { 'ssh' => { 'port' => 2200 } } }
+          'config' => { 'ssh' => { 'port' => 2200 } } },
       ]
     }
   end
@@ -50,7 +50,7 @@ describe 'terraform::resolve_reference' do
               'dir' => terraform_dir,
               'resource_type' => resource_type,
               'backend' => backend,
-              'target_mapping' => target_mapping }
+              'target_mapping' => target_mapping },
           ],
           'config' => {
             'transport' => 'ssh',
@@ -59,7 +59,7 @@ describe 'terraform::resolve_reference' do
               'password' => 'root',
               'host-key-check' => false
             }
-          } }
+          } },
       ]
     }
   end
@@ -88,7 +88,7 @@ describe 'terraform::resolve_reference' do
 
     it 'runs a command on a discovered target' do
       result = run_command('whoami', 'terraform', inventory: inventory)
-      expect(result[0]['value']['stdout']).to match(/root/)
+      expect(result[0]['value']['stdout']).to match(%r{root})
     end
   end
 
@@ -98,7 +98,7 @@ describe 'terraform::resolve_reference' do
 
     it 'errors when a remote state file is not found' do
       expect { run_command('whoami', 'terraform', inventory: inventory) }.to raise_error(
-        /Could not pull Terraform remote state file/
+        %r{Could not pull Terraform remote state file},
       )
     end
   end

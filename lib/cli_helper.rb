@@ -2,6 +2,7 @@
 
 require 'open3'
 
+# Used to handle terraform command options and execution in a consistent way
 module CliHelper
   class << self
     # Execute a Terraform command with open3.
@@ -24,7 +25,7 @@ module CliHelper
 
     # The apply and destroy CLI opts map from the same task opts to cli opts, share that code.
     def transcribe_to_cli(opts, dir = nil, required = [])
-      cli_opts = %w[-no-color]
+      cli_opts = ['-no-color']
       cli_opts.push(*required)
       cli_opts << "-state=#{File.expand_path(opts[:state], dir)}" if opts[:state]
       cli_opts << "-state-out=#{File.expand_path(opts[:state_out], dir)}" if opts[:state_out]
@@ -34,7 +35,7 @@ module CliHelper
         resources.each { |resource| cli_opts << "-target=#{resource}" }
       end
 
-      opts[:var].each { |k, v| cli_opts << "-var '#{k}=#{v}'" } if opts[:var]
+      opts[:var]&.each { |k, v| cli_opts << "-var '#{k}=#{v}'" }
 
       if opts[:var_file]
         var_file_paths = opts[:var_file].is_a?(Array) ? opts[:var_file] : Array(opts[:var_file])

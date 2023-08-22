@@ -8,14 +8,13 @@ plan terraform::apply(
   Optional[Boolean]                              $return_output = false,
   Optional[Boolean]                              $refresh_state = false
 ) {
-
   $apply_opts = {
     'dir'       => $dir,
     'state'     => $state,
     'state_out' => $state_out,
     'target'    => $target,
     'var'       => $var,
-    'var_file'  => $var_file
+    'var_file'  => $var_file,
   }
 
   $apply_logs = run_task('terraform::apply', 'localhost', $apply_opts)
@@ -26,7 +25,7 @@ plan terraform::apply(
 
   $post_apply_opts = {
     'dir'   => $dir,
-    'state' => $state
+    'state' => $state,
   }
 
   if $refresh_state {

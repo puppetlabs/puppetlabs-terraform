@@ -6,6 +6,7 @@ require_relative '../lib/cli_helper.rb'
 require 'json'
 require 'open3'
 
+# Test terraform::initialize task
 class TerraformInitialize < TaskHelper
   def init(opts)
     dir = File.expand_path(opts[:dir]) if opts[:dir]
@@ -21,11 +22,9 @@ class TerraformInitialize < TaskHelper
                                        CliHelper.execute("terraform init #{cli_opts}")
                                      end
 
-    if status == 0
-      return { 'stdout': stdout_str }
-    else
-      raise TaskHelper::Error.new(_(stderr_str), 'terraform/init-error')
-    end
+    return { 'stdout': stdout_str } if status == 0
+
+    raise TaskHelper::Error.new(_(stderr_str), 'terraform/init-error')
   end
 
   def task(opts)

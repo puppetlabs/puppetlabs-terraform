@@ -28,10 +28,10 @@ describe 'terraform::destroy' do
     expect(status).to eq(0)
   end
 
-  it "destroys Terraform resources" do
+  it 'destroys Terraform resources' do
     result = run_plan('terraform::destroy', 'dir' => terraform_dir)
     expect(result['status']).to eq('success')
     expect(result['value'][0]['value']['stdout'])
-      .to match(/Destroy complete! Resources: 2 destroyed./)
+      .to match(%r{Destroy complete! Resources: 2 destroyed.})
   end
 end
