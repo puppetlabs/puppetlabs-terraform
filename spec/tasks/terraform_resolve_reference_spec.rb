@@ -9,7 +9,7 @@ describe Terraform do
   let(:uri) { 'network_interface.0.access_config.0.nat_ip' }
   let(:name) { 'id' }
 
-  describe "#load_statefile" do
+  describe '#load_statefile' do
     it 'reads the terraform state file from the given directory' do
       statefile = File.join(terraform_dir, 'terraform.tfstate')
       state = subject.load_statefile(dir: terraform_dir)
@@ -93,7 +93,7 @@ describe Terraform do
     end
   end
 
-  describe "using a terrform version 3 state file" do
+  describe 'using a terrform version 3 state file' do
     let(:state) { 'terraform3.tfstate' }
     let(:ip0) { '34.83.150.52' }
     let(:ip1) { '34.83.16.240' }
@@ -101,7 +101,7 @@ describe Terraform do
     include_examples 'loading terraform targets'
   end
 
-  describe "using a terraform version 4 state file" do
+  describe 'using a terraform version 4 state file' do
     let(:state) { 'terraform.tfstate' }
     let(:ip0) { '34.83.160.116' }
     let(:ip1) { '35.230.3.44' }
@@ -109,12 +109,12 @@ describe Terraform do
     include_examples 'loading terraform targets'
   end
 
-  describe "#task" do
+  describe '#task' do
     it 'returns the list of targets' do
       opts = { dir: 'foo', resource_type: 'bar' }
       targets = [
-        { uri: "1.2.3.4", name: "my-instance" },
-        { uri: "1.2.3.5", name: "my-other-instance" }
+        { uri: '1.2.3.4', name: 'my-instance' },
+        { uri: '1.2.3.5', name: 'my-other-instance' },
       ]
       allow(subject).to receive(:resolve_reference).and_return(targets)
 

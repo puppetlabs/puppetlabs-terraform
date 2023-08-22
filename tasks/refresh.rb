@@ -4,6 +4,7 @@
 require_relative '../../ruby_task_helper/files/task_helper.rb'
 require_relative '../lib/cli_helper.rb'
 
+# Test terraform::refresh task
 class TerraformRefresh < TaskHelper
   def output(opts)
     dir = File.expand_path(opts[:dir]) if opts[:dir]
@@ -15,11 +16,8 @@ class TerraformRefresh < TaskHelper
                                        CliHelper.execute("terraform refresh #{cli_opts}")
                                      end
 
-    if status == 0
-      { 'stdout': stdout_str }
-    else
-      raise TaskHelper::Error.new(stderr_str, 'terraform/refresh-error')
-    end
+    raise TaskHelper::Error.new(stderr_str, 'terraform/refresh-error') unless status == 0
+    { 'stdout': stdout_str }
   end
 
   def task(opts)

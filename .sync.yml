@@ -12,3 +12,12 @@ appveyor.yml:
     - /.devcontainer
     - /spec/fixtures/docker_provision/.terraform*
     - /spec/fixtures/docker_provision/terraform.tfstate*
+.rubocop.yml:
+  default_configs:
+    RSpec/NamedSubject:
+      Enabled: false
+    RSpec/SubjectStub:
+      Enabled: false
+    RSpec/BeforeAfterAll:
+      Exclude:
+        - spec/integration/**/*.rb

@@ -31,20 +31,20 @@ describe 'terraform::apply' do
     expect(status).to eq(0)
   end
 
-  it "applies terraform manifest and returns logs" do
+  it 'applies terraform manifest and returns logs' do
     result = run_plan('terraform::apply', 'dir' => terraform_dir)
     expect(result['status']).to eq('success')
     expect(result['value'][0]['value']['stdout'])
-      .to match(/Apply complete! Resources: 2 added, 0 changed, 0 destroyed./)
+      .to match(%r{Apply complete! Resources: 2 added, 0 changed, 0 destroyed.})
   end
 
-  it "applies terraform manifest and returns output" do
+  it 'applies terraform manifest and returns output' do
     result = run_plan('terraform::apply', 'dir' => terraform_dir, 'return_output' => true)
     expect(result['status']).to eq('success')
     expect(result['value']['terraform_output']['value']).to eq(expected_default_output)
   end
 
-  it "sends along vars and var-file" do
+  it 'sends along vars and var-file' do
     params = {
       'dir' => terraform_dir,
       'return_output' => true,

@@ -3,11 +3,11 @@
 require 'spec_helper'
 require 'bolt_spec/plans'
 
-describe "terraform::destroy" do
+describe 'terraform::destroy' do
   include BoltSpec::Plans
   BoltSpec::Plans.init
 
-  let(:params) {
+  let(:params) do
     {
       'dir' => 'foo',
       'state' => 'foo',
@@ -16,11 +16,11 @@ describe "terraform::destroy" do
       'var' => { 'foo' => 'bar' },
       'var_file' => 'foo'
     }
-  }
+  end
   let(:bolt_config) { { 'modulepath' => RSpec.configuration.module_path } }
   let(:destroy_result) { { 'stdout' => 'Terraform logs' } }
 
-  it 'should return logs from destroy task' do
+  it 'returns logs from destroy task' do
     allow_task('terraform::destroy').with_params(params).always_return(destroy_result)
     result = run_plan('terraform::destroy', params)
     expect(result.value[0].value).to eq(destroy_result)

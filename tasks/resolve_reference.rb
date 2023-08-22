@@ -6,6 +6,7 @@ require_relative '../../ruby_plugin_helper/lib/plugin_helper.rb'
 require 'json'
 require 'open3'
 
+# Test inventory resolve_reference task
 class Terraform < TaskHelper
   include RubyPluginHelper
 
@@ -18,9 +19,9 @@ class Terraform < TaskHelper
 
     state = load_statefile(opts)
     regex = Regexp.new(opts[:resource_type])
-    targets = extract_resources(state).map do |type, resource|
+    targets = extract_resources(state).map { |type, resource|
       resource if type.match?(regex)
-    end.compact
+    }.compact
 
     attributes = required_data(template)
     target_data = targets.map do |target|
@@ -113,13 +114,11 @@ class Terraform < TaskHelper
     data.each_with_object({}) do |(key, val), acc|
       # Attempt to coerce each key into an integer, in case it's the index for an array
       keys = key.split('.').map do |k|
-        begin
-          Integer(k)
-        rescue ArgumentError
-          k
-        end
+        Integer(k)
+      rescue ArgumentError
+        k
       end
-      leaf = keys[0...-1].inject(acc) do |a, k|
+      leaf = keys[0...-1].reduce(acc) do |a, k|
         a[k] ||= {}
       end
       leaf[keys.last] = val

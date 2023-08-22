@@ -6,21 +6,19 @@ require_relative '../lib/cli_helper.rb'
 require 'json'
 require 'open3'
 
+# Test terraform::destroy task
 class TerraformDestroy < TaskHelper
   def destroy(opts)
     dir = File.expand_path(opts[:dir]) if opts[:dir]
-    cli_opts = CliHelper.transcribe_to_cli(opts, dir, %w[-auto-approve -input=false])
+    cli_opts = CliHelper.transcribe_to_cli(opts, dir, ['-auto-approve', '-input=false'])
 
     stdout_str, stderr_str, status = if dir
                                        CliHelper.execute("terraform destroy #{cli_opts}", dir: dir)
                                      else
                                        CliHelper.execute("terraform destroy #{cli_opts}")
                                      end
-    if status == 0
-      { 'stdout': stdout_str }
-    else
-      raise TaskHelper::Error.new(stderr_str, 'terraform/destroy-error')
-    end
+    raise TaskHelper::Error.new(stderr_str, 'terraform/destroy-error') unless status == 0
+    { 'stdout': stdout_str }
   end
 
   def task(opts)
