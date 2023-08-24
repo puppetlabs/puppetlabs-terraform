@@ -1,11 +1,11 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require_relative '../fixtures/modules/ruby_task_helper/files/task_helper.rb'
-require_relative '../../tasks/destroy.rb'
+require_relative '../../fixtures/modules/ruby_task_helper/files/task_helper.rb'
+require_relative '../../../tasks/apply.rb'
 
-describe TerraformDestroy do
-  describe '#destroy' do
+describe TerraformApply do
+  describe '#apply' do
     let(:terraform_out) { 'Terraform message' }
     let(:terraform_err) { '' }
     let(:terraform_code) { 0 }
@@ -13,14 +13,14 @@ describe TerraformDestroy do
     let(:expected_dir) { File.join(Dir.pwd, dir) }
     let(:opts) { {} }
     let(:success_result) { { stdout: terraform_out } }
-    let(:base_cli) { ['terraform', 'destroy', '-no-color', '-auto-approve', '-input=false'] }
+    let(:base_cli) { ['terraform', 'apply', '-no-color', '-auto-approve', '-input=false'] }
     let(:additional_cli) { [] }
     let(:cli) { base_cli.concat(additional_cli).join(' ') }
 
     context 'with no options specified' do
-      it 'Invokes terraform destroy with default args' do
+      it 'Invokes terraform apply with default args' do
         expect(Open3).to receive(:capture3).with(cli).and_return(terraform_response)
-        result = subject.destroy(opts)
+        result = subject.apply(opts)
         expect(result).to eq(success_result)
       end
     end
@@ -29,10 +29,10 @@ describe TerraformDestroy do
       let(:dir) { 'foo/bar' }
       let(:opts) { { dir: dir } }
 
-      it 'invokes terraform destroy with default args from dir relative to cwd' do
+      it 'invokes terraform apply with default args from dir relative to cwd' do
         expected_dir = File.expand_path(dir)
         expect(Open3).to receive(:capture3).with(cli, chdir: expected_dir).and_return(terraform_response)
-        result = subject.destroy(opts)
+        result = subject.apply(opts)
         expect(result).to eq(success_result)
       end
     end
@@ -45,7 +45,7 @@ describe TerraformDestroy do
 
       it 'provides abosulute path for state relative to dir' do
         expect(Open3).to receive(:capture3).with(cli, chdir: expected_dir).and_return(terraform_response)
-        result = subject.destroy(opts)
+        result = subject.apply(opts)
         expect(result).to eq(success_result)
       end
     end
@@ -57,7 +57,7 @@ describe TerraformDestroy do
 
       it 'specifieds single target' do
         expect(Open3).to receive(:capture3).with(cli).and_return(terraform_response)
-        result = subject.destroy(opts)
+        result = subject.apply(opts)
         expect(result).to eq(success_result)
       end
     end
@@ -69,7 +69,7 @@ describe TerraformDestroy do
 
       it 'specifies multiple targets' do
         expect(Open3).to receive(:capture3).with(cli).and_return(terraform_response)
-        result = subject.destroy(opts)
+        result = subject.apply(opts)
         expect(result).to eq(success_result)
       end
     end
@@ -81,7 +81,7 @@ describe TerraformDestroy do
 
       it 'specifieds single var' do
         expect(Open3).to receive(:capture3).with(cli).and_return(terraform_response)
-        result = subject.destroy(opts)
+        result = subject.apply(opts)
         expect(result).to eq(success_result)
       end
     end
@@ -93,7 +93,7 @@ describe TerraformDestroy do
 
       it 'specifies multiple vars' do
         expect(Open3).to receive(:capture3).with(cli).and_return(terraform_response)
-        result = subject.destroy(opts)
+        result = subject.apply(opts)
         expect(result).to eq(success_result)
       end
     end
@@ -106,7 +106,7 @@ describe TerraformDestroy do
 
       it 'provides abosulute path for var-file relative to dir' do
         expect(Open3).to receive(:capture3).with(cli, chdir: expected_dir).and_return(terraform_response)
-        result = subject.destroy(opts)
+        result = subject.apply(opts)
         expect(result).to eq(success_result)
       end
     end

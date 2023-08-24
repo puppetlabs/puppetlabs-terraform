@@ -1,12 +1,12 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require_relative '../fixtures/modules/ruby_task_helper/files/task_helper.rb'
-require_relative '../fixtures/modules/ruby_plugin_helper/lib/plugin_helper.rb'
-require_relative '../../tasks/resolve_reference.rb'
+require_relative '../../fixtures/modules/ruby_task_helper/files/task_helper.rb'
+require_relative '../../fixtures/modules/ruby_plugin_helper/lib/plugin_helper.rb'
+require_relative '../../../tasks/resolve_reference.rb'
 
 describe Terraform do
-  let(:terraform_dir) { File.expand_path(File.join(__dir__, '../fixtures/terraform_dir')) }
+  let(:terraform_dir) { File.expand_path(File.join(__dir__, '../../fixtures/terraform_dir')) }
   let(:resource_type) { 'google_compute_instance.*' }
   let(:uri) { 'network_interface.0.access_config.0.nat_ip' }
   let(:name) { 'id' }
