@@ -2,7 +2,6 @@
 
 require 'spec_helper'
 require 'bolt_spec/run'
-require 'open3'
 
 describe 'terraform::resolve_reference' do
   include BoltSpec::Run
@@ -57,7 +56,9 @@ describe 'terraform::resolve_reference' do
             'ssh' => {
               'user' => 'root',
               'password' => 'root',
-              'host-key-check' => false
+              'host-key-check' => false,
+              'load-config' => false,
+              'private-key' => '/dev/null',
             }
           } },
       ]
@@ -67,18 +68,18 @@ describe 'terraform::resolve_reference' do
   context 'with a local state file' do
     before(:all) do
       terraform_dir = File.join(RSpec.configuration.module_path, '../docker_provision')
-      _out, _err, status = Open3.capture3('terraform init', chdir: terraform_dir)
-      expect(status).to eq(0)
-      _out, _err, status = Open3.capture3('terraform apply -auto-approve', chdir: terraform_dir)
-      expect(status).to eq(0)
+      bolt_config = { 'modulepath' => RSpec.configuration.module_path }
+      result = run_task('terraform::initialize', 'localhost', { 'dir' => terraform_dir }, config: bolt_config)
+      expect(result[0]['status']).to eq('success')
+      result = run_task('terraform::apply', 'localhost', { 'dir' => terraform_dir }, config: bolt_config)
+      expect(result[0]['status']).to eq('success')
     end
 
     after(:all) do
       terraform_dir = File.join(RSpec.configuration.module_path, '../docker_provision')
-      _out, _err, status = Open3.capture3('terraform destroy -auto-approve', chdir: terraform_dir)
-      expect(status).to eq(0)
-      _out, _err, status = Open3.capture3('rm -rf .terraform', chdir: terraform_dir)
-      expect(status).to eq(0)
+      bolt_config = { 'modulepath' => RSpec.configuration.module_path }
+      result = run_task('terraform::destroy', 'localhost', { 'dir' => terraform_dir }, config: bolt_config)
+      expect(result[0]['status']).to eq('success')
     end
 
     it 'resolves references from an applied terraform manifest' do
