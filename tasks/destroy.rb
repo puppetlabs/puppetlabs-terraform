@@ -1,10 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require_relative '../../ruby_task_helper/files/task_helper.rb'
+require_relative '../../ruby_task_helper/files/task_helper.rb' unless Object.const_defined?('TaskHelper')
 require_relative '../lib/cli_helper.rb'
-require 'json'
-require 'open3'
 
 # Test terraform::destroy task
 class TerraformDestroy < TaskHelper
