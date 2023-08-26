@@ -1,3 +1,19 @@
+## Release 0.7.0
+
+### Added
+
+* New `refresh` task and plan
+
+  Task executes a terraform refresh to enable updating the state without running an apply, which could potentially destroy resources.
+
+* New `refresh_state` option added to apply plan
+
+  Will run the `terrafrom::refresh` task after doing an apply. This allows for situations where resources were modified during the apply and not written to state so a refresh is required to capture them.
+
+### Changed
+
+* Puppet 8 Support / Drop Puppet 4 & 5
+
 ## Release 0.6.1
 
 ### Bug fixes
