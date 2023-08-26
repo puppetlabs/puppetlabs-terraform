@@ -1,0 +1,29 @@
+---
+default:
+  provisioner: docker
+  images:
+    - litmusimage/ubuntu:22.04
+vagrant:
+  provisioner: vagrant
+  images:
+    - litmusimage/rockylinux:8
+    - litmusimage/ubuntu:22.04
+    - gusztavvargadr/windows-server
+yum:
+  provisioner: docker
+  images:
+    - litmusimage/rockylinux:8
+apt:
+  provisioner: docker
+  images:
+    - litmusimage/ubuntu:22.04
+release_checks_7:
+  provisioner: abs
+  images:
+    - win-10-pro-x86_64
+    - ubuntu-2004-x86_64
+release_checks_8:
+  provisioner: abs
+  images:
+    - win-10-pro-x86_64
+    - ubuntu-2004-x86_64
