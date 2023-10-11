@@ -38,7 +38,7 @@ describe 'terraform::apply' do
 
   it 'refreshes state when $refresh_state is set' do
     plan_params = params.merge('refresh_state' => true)
-    sub_task_params = { 'dir' => 'foo', 'state' => 'foo' }
+    sub_task_params = { 'dir' => 'foo', 'state' => 'foo', 'var' => 'foo', 'var_file' => 'foo' }
     allow_task('terraform::apply').with_params(params).always_return(apply_result)
     allow_task('terraform::refresh').with_params(sub_task_params).always_return(apply_result)
     result = run_plan('terraform::apply', plan_params).value[0]
