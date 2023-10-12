@@ -23,13 +23,19 @@ plan terraform::apply(
     return $apply_logs
   }
 
+  if $refresh_state {
+    $refresh_opts = {
+      'dir'      => $dir,
+      'state'    => $state,
+      'var'      => $var,
+      'var_file' => $var_file,
+    }
+    run_task('terraform::refresh', 'localhost', $refresh_opts)
+  }
+
   $post_apply_opts = {
     'dir'   => $dir,
     'state' => $state,
-  }
-
-  if $refresh_state {
-    run_task('terraform::refresh', 'localhost', $post_apply_opts)
   }
 
   $output = run_task('terraform::output', 'localhost', $post_apply_opts)
