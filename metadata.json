@@ -1,6 +1,6 @@
 {
   "name": "puppetlabs-terraform",
-  "version": "0.7.0",
+  "version": "0.7.1",
   "author": "Puppet, Inc.",
   "summary": "A task to generate Bolt inventory from Terraform statefiles",
   "license": "Apache-2.0",
