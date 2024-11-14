@@ -1,8 +1,8 @@
 fixtures:
   forge_modules:
-    ruby_task_helper:
-      repo: "puppetlabs/ruby_task_helper"
-      ref: "0.6.1"
+    # ruby_task_helper:
+    #   repo: "puppetlabs/ruby_task_helper"
+    #   ref: "0.6.1"
     ruby_plugin_helper:
       repo: "puppetlabs/ruby_plugin_helper"
       ref: "0.2.0"
@@ -12,3 +12,6 @@ fixtures:
       ref: v4.13.0
     facts: https://github.com/puppetlabs/puppetlabs-facts.git
     provision: https://github.com/puppetlabs/provision.git
+    ruby_task_helper:
+      repo: 'https://github.com/puppetlabs/puppetlabs-ruby_task_helper.git'
+      ref: main
