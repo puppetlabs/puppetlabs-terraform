@@ -8,11 +8,11 @@
   "dependencies": [
     {
       "name": "puppetlabs-ruby_task_helper",
-      "version_requirement": ">= 0.1.0 < 1.0.0"
+      "version_requirement": ">= 0.1.0 < 2.0.0"
     },
     {
       "name": "puppetlabs-ruby_plugin_helper",
-      "version_requirement": ">= 0.1.0 <= 2.0.0"
+      "version_requirement": ">= 0.1.0 <= 1.0.0"
     }
   ],
   "operatingsystem_support": [
