@@ -3,12 +3,15 @@ fixtures:
     ruby_task_helper:
       repo: "puppetlabs/ruby_task_helper"
       ref: "1.0.0"
-    ruby_plugin_helper:
-      repo: "puppetlabs/ruby_plugin_helper"
-      ref: "0.2.0"
+    # ruby_plugin_helper:
+    #   repo: "puppetlabs/ruby_plugin_helper"
+    #   ref: "0.2.0"
   repositories:
     puppet_agent:
       repo: https://github.com/puppetlabs/puppetlabs-puppet_agent.git
       ref: v4.13.0
+    ruby_plugin_helper:
+      repo: https://github.com/puppetlabs/puppetlabs-ruby_plugin_helper
+      ref: BOLT-28-ensure_puppet_8_compatibility
     facts: https://github.com/puppetlabs/puppetlabs-facts.git
     provision: https://github.com/puppetlabs/provision.git
