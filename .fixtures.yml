@@ -12,6 +12,6 @@ fixtures:
       ref: v4.13.0
     ruby_plugin_helper:
       repo: https://github.com/puppetlabs/puppetlabs-ruby_plugin_helper
-      ref: BOLT-28-ensure_puppet_8_compatibility
+      branch: BOLT-28-ensure_puppet_8_compatibility
     facts: https://github.com/puppetlabs/puppetlabs-facts.git
     provision: https://github.com/puppetlabs/provision.git
