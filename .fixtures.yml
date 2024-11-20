@@ -13,6 +13,6 @@ fixtures:
     ruby_plugin_helper:
       # Testing again with a pdk update applied and refreshed
       repo: https://github.com/puppetlabs/puppetlabs-ruby_plugin_helper
-      branch: BOLT-28-fixing_os_support_list
+      ref: main
     facts: https://github.com/puppetlabs/puppetlabs-facts.git
     provision: https://github.com/puppetlabs/provision.git
