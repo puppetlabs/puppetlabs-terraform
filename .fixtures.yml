@@ -11,6 +11,7 @@ fixtures:
       repo: https://github.com/puppetlabs/puppetlabs-puppet_agent.git
       ref: v4.13.0
     ruby_plugin_helper:
+      # Testing again with a pdk update applied
       repo: https://github.com/puppetlabs/puppetlabs-ruby_plugin_helper
       branch: BOLT-28-ensure_puppet_8_compatibility
     facts: https://github.com/puppetlabs/puppetlabs-facts.git
