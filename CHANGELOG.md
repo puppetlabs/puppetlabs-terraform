@@ -1,3 +1,11 @@
+# Changelog
+
+## Release 0.7.2
+
+* **Bump ruby_task_helper upper bound to < 2.0.0** ([#37](https://github.com/puppetlabs/puppetlabs-terraform/pull/37))
+
+## Release 0.7.1
+
 ## Release 0.7.0
 
 ### Added
