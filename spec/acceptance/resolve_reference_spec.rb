@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'spec_helper_acceptance'
 require 'bolt_spec/run'
 
 describe 'terraform::resolve_reference' do
