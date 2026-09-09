@@ -18,7 +18,7 @@ class TerraformInitialize < TaskHelper
                                        CliHelper.execute("terraform init #{cli_opts}")
                                      end
 
-    return { stdout: stdout_str } if status.zero?
+    return { stdout: stdout_str } if status.success?
 
     raise TaskHelper::Error.new(_(stderr_str), 'terraform/init-error')
   end

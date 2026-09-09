@@ -16,7 +16,7 @@ class TerraformOutput < TaskHelper
                                      else
                                        CliHelper.execute("terraform output #{cli_opts}")
                                      end
-    raise TaskHelper::Error.new(stderr_str, 'terraform/output-error') unless status.zero?
+    raise TaskHelper::Error.new(stderr_str, 'terraform/output-error') unless status.success?
 
     JSON.parse(stdout_str)
   end

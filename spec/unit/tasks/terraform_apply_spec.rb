@@ -8,8 +8,12 @@ describe TerraformApply do
   describe '#apply' do
     let(:terraform_out) { 'Terraform message' }
     let(:terraform_err) { '' }
-    let(:terraform_code) { 0 }
-    let(:terraform_response) { [terraform_out, terraform_err, terraform_code] }
+    # A real Open3.capture3 call returns a Process::Status here, not an
+    # Integer -- Process::Status has no #zero? method, only #success?/
+    # #exitstatus. Use a verifying double so the mock's shape matches the
+    # real API (see tasks/apply.rb's `status.success?` check).
+    let(:terraform_status) { instance_double(Process::Status, success?: true) }
+    let(:terraform_response) { [terraform_out, terraform_err, terraform_status] }
     let(:expected_dir) { File.join(Dir.pwd, dir) }
     let(:opts) { {} }
     let(:success_result) { { stdout: terraform_out } }
@@ -108,6 +112,16 @@ describe TerraformApply do
         expect(Open3).to receive(:capture3).with(cli, chdir: expected_dir).and_return(terraform_response)
         result = subject.apply(opts)
         expect(result).to eq(success_result)
+      end
+    end
+
+    context 'when terraform apply exits non-zero' do
+      let(:terraform_err) { 'Error: something went wrong' }
+      let(:terraform_status) { instance_double(Process::Status, success?: false) }
+
+      it 'raises a TaskHelper::Error instead of returning stdout' do
+        expect(Open3).to receive(:capture3).with(cli).and_return(terraform_response)
+        expect { subject.apply(opts) }.to raise_error(TaskHelper::Error, terraform_err)
       end
     end
   end

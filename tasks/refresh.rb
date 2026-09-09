@@ -16,7 +16,7 @@ class TerraformRefresh < TaskHelper
                                        CliHelper.execute("terraform refresh #{cli_opts}")
                                      end
 
-    raise TaskHelper::Error.new(stderr_str, 'terraform/refresh-error') unless status.zero?
+    raise TaskHelper::Error.new(stderr_str, 'terraform/refresh-error') unless status.success?
 
     { stdout: stdout_str }
   end

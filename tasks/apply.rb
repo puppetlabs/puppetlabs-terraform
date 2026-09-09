@@ -15,7 +15,7 @@ class TerraformApply < TaskHelper
                                      else
                                        CliHelper.execute("terraform apply #{cli_opts}")
                                      end
-    raise TaskHelper::Error.new(stderr_str, 'terraform/apply-error') unless status.zero?
+    raise TaskHelper::Error.new(stderr_str, 'terraform/apply-error') unless status.success?
 
     { stdout: stdout_str }
   end
