@@ -14,7 +14,7 @@ describe 'terraform::refresh' do
       'state_out' => 'foo',
       'target' => 'foo',
       'var' => { 'foo' => 'bar' },
-      'var_file' => 'foo'
+      'var_file' => 'foo',
     }
   end
   let(:bolt_config) { { 'modulepath' => RSpec.configuration.module_path } }
