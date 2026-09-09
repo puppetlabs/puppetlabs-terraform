@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require_relative '../../fixtures/modules/ruby_task_helper/files/task_helper.rb'
-require_relative '../../../tasks/initialize.rb'
+require_relative '../../fixtures/modules/ruby_task_helper/files/task_helper'
+require_relative '../../../tasks/initialize'
 
 describe TerraformInitialize do
   describe '#initialize' do

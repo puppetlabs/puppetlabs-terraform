@@ -1,9 +1,9 @@
 # frozen_string_literal: true
 
 require 'spec_helper'
-require_relative '../../fixtures/modules/ruby_task_helper/files/task_helper.rb'
-require_relative '../../fixtures/modules/ruby_plugin_helper/lib/plugin_helper.rb'
-require_relative '../../../tasks/resolve_reference.rb'
+require_relative '../../fixtures/modules/ruby_task_helper/files/task_helper'
+require_relative '../../fixtures/modules/ruby_plugin_helper/lib/plugin_helper'
+require_relative '../../../tasks/resolve_reference'
 
 describe Terraform do
   let(:terraform_dir) { File.expand_path(File.join(__dir__, '../../fixtures/terraform_dir')) }
@@ -41,7 +41,7 @@ describe Terraform do
         dir: terraform_dir,
         state: state,
         resource_type: resource_type,
-        target_mapping: { uri: uri }
+        target_mapping: { uri: uri },
       }
     end
 

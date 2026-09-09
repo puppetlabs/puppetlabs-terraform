@@ -1,16 +1,14 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require_relative '../../ruby_task_helper/files/task_helper.rb' unless Object.const_defined?('TaskHelper')
-require_relative '../lib/cli_helper.rb'
+require_relative '../../ruby_task_helper/files/task_helper' unless Object.const_defined?(:TaskHelper)
+require_relative '../lib/cli_helper'
 
 # Test terraform::initialize task
 class TerraformInitialize < TaskHelper
   def init(opts)
     dir = File.expand_path(opts[:dir]) if opts[:dir]
-    if dir ? Dir.exist?("#{dir}/.terraform") : Dir.exist?(File.expand_path('.terraform'))
-      return { 'stdout': 'Terraform directory already initialized' }
-    end
+    return { stdout: 'Terraform directory already initialized' } if dir ? Dir.exist?("#{dir}/.terraform") : Dir.exist?(File.expand_path('.terraform'))
 
     cli_opts = CliHelper.transcribe_to_cli(opts, dir)
 
@@ -20,7 +18,7 @@ class TerraformInitialize < TaskHelper
                                        CliHelper.execute("terraform init #{cli_opts}")
                                      end
 
-    return { 'stdout': stdout_str } if status == 0
+    return { stdout: stdout_str } if status.zero?
 
     raise TaskHelper::Error.new(_(stderr_str), 'terraform/init-error')
   end

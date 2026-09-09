@@ -16,7 +16,7 @@ describe 'terraform::resolve_reference' do
       'value' => [
         { 'uri' => '0.0.0.0',
           'config' => { 'ssh' => { 'port' => 2200 } } },
-      ]
+      ],
     }
   end
 
@@ -25,9 +25,9 @@ describe 'terraform::resolve_reference' do
       'uri' => 'ports.0.ip',
       'config' => {
         'ssh' => {
-          'port' => 'ports.0.external'
-        }
-      }
+          'port' => 'ports.0.external',
+        },
+      },
     }
   end
 
@@ -35,7 +35,7 @@ describe 'terraform::resolve_reference' do
     {
       'dir' => terraform_dir,
       'resource_type' => resource_type,
-      'target_mapping' => target_mapping
+      'target_mapping' => target_mapping,
     }
   end
 
@@ -59,9 +59,9 @@ describe 'terraform::resolve_reference' do
               'host-key-check' => false,
               'load-config' => false,
               'private-key' => '/dev/null',
-            }
+            },
           } },
-      ]
+      ],
     }
   end
 

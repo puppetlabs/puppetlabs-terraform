@@ -49,7 +49,7 @@ describe 'terraform::apply' do
       'dir' => terraform_dir,
       'return_output' => true,
       'var' => { 'clivar' => 'foo' },
-      'var_file' => var_file
+      'var_file' => var_file,
     }
     result = run_plan('terraform::apply', params)
     expect(result['status']).to eq('success')
