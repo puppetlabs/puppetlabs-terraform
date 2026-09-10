@@ -3,12 +3,6 @@ fixtures:
   repositories:
     provision: "https://github.com/puppetlabs/provision.git"
     puppet_agent: 'https://github.com/puppetlabs/puppetlabs-puppet_agent.git'
-    facts:
-      repo: "https://github.com/puppetlabs/puppetlabs-facts.git"
-      branch: "bolt_193_puppet9"
-    ruby_task_helper:
-      repo: "https://github.com/puppetlabs/puppetlabs-ruby_task_helper.git"
-      branch: "bolt_193_puppet9"
-    ruby_plugin_helper:
-      repo: "https://github.com/puppetlabs/puppetlabs-ruby_plugin_helper.git"
-      branch: "bolt_193_puppet9"
+    facts: "https://github.com/puppetlabs/puppetlabs-facts.git"
+    ruby_task_helper: "https://github.com/puppetlabs/puppetlabs-ruby_task_helper.git"
+    ruby_plugin_helper: "https://github.com/puppetlabs/puppetlabs-ruby_plugin_helper.git"
