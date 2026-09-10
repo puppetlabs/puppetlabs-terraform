@@ -1,5 +1,13 @@
 # Changelog
 
+## Release 1.0.0
+
+### Changed
+
+* **Puppet 9 / Ruby 4 support** ([BOLT-193](https://perforce.atlassian.net/browse/BOLT-193))
+
+  PDK updated to target Puppet 9 (Ruby 4). Supported OS matrix limited to Ubuntu 24.04 and Rocky 9.
+
 ## Release 0.7.2
 
 * **Bump ruby_task_helper upper bound to < 2.0.0** ([#37](https://github.com/puppetlabs/puppetlabs-terraform/pull/37))
