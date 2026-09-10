@@ -1,90 +1,117 @@
+<!-- markdownlint-disable MD024 -->
 # Changelog
 
-## Release 0.7.2
+All notable changes to this project will be documented in this file.
 
-* **Bump ruby_task_helper upper bound to < 2.0.0** ([#37](https://github.com/puppetlabs/puppetlabs-terraform/pull/37))
+The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/) and this project adheres to [Semantic Versioning](http://semver.org).
 
-## Release 0.7.1
+## [v1.0.0](https://github.com/puppetlabs/puppetlabs-terraform/tree/v1.0.0) - 2026-09-10
 
-## Release 0.7.0
-
-### Added
-
-* New `refresh` task and plan
-
-  Task executes a terraform refresh to enable updating the state without running an apply, which could potentially destroy resources.
-
-* New `refresh_state` option added to apply plan
-
-  Will run the `terrafrom::refresh` task after doing an apply. This allows for situations where resources were modified during the apply and not written to state so a refresh is required to capture them.
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-terraform/compare/0.7.2...v1.0.0)
 
 ### Changed
 
-* Puppet 8 Support / Drop Puppet 4 & 5
+- (BOLT-193) terraform pdk update to Puppet 9 (Ruby 4) [#43](https://github.com/puppetlabs/puppetlabs-terraform/pull/43) ([gavindidrichsen](https://github.com/gavindidrichsen))
 
-## Release 0.6.1
+### Other
 
-### Bug fixes
+- CHANGELOG update [#44](https://github.com/puppetlabs/puppetlabs-terraform/pull/44) ([gavindidrichsen](https://github.com/gavindidrichsen))
+- (BOLT-136) Prepare for release. [#42](https://github.com/puppetlabs/puppetlabs-terraform/pull/42) ([gavindidrichsen](https://github.com/gavindidrichsen))
 
-* **Add PDK as a gem dependency**
+## [0.7.2](https://github.com/puppetlabs/puppetlabs-terraform/tree/0.7.2) - 2026-05-14
 
-  PDK is now a gem dependency for the module release pipeline
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-terraform/compare/0.7.1...0.7.2)
 
-## Release 0.6.0
+### Other
 
-### New features
+- (maint) Bump ruby_task_helper dependency for Puppet 8 [#37](https://github.com/puppetlabs/puppetlabs-terraform/pull/37) ([jpartlow](https://github.com/jpartlow))
+- Release 0.7.1 [#35](https://github.com/puppetlabs/puppetlabs-terraform/pull/35) ([h0tw1r3](https://github.com/h0tw1r3))
 
-* **Bump maximum Puppet version to include 7.x** ([#22](https://github.com/puppetlabs/puppetlabs-terraform/pull/22))
+## [0.7.1](https://github.com/puppetlabs/puppetlabs-terraform/tree/0.7.1) - 2023-11-27
 
-## Release 0.5.0
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-terraform/compare/0.7.0...0.7.1)
 
-### New features
+### Other
 
-* **Set `resolve_reference` task to private** ([#14](https://github.com/puppetlabs/puppetlabs-terraform/pulls/14))
+- Add `var` and `var_file` params to terraform::refresh [#34](https://github.com/puppetlabs/puppetlabs-terraform/pull/34) ([timidri](https://github.com/timidri))
+- Release 0.7.0 [#32](https://github.com/puppetlabs/puppetlabs-terraform/pull/32) ([h0tw1r3](https://github.com/h0tw1r3))
 
-    The `resolve_reference` task has been set to `private` so it no longer appears in UI lists.
+## [0.7.0](https://github.com/puppetlabs/puppetlabs-terraform/tree/0.7.0) - 2023-08-30
 
-### Bug fixes
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-terraform/compare/0.6.1...0.7.0)
 
-* **Inventory plugin raised an exception when no statefile was found** ([#16](https://github.com/puppetlabs/puppetlabs-terraform/pulls/16))
+### Other
 
-  The `resolve_reference` task would error when no statefile was found. It now returns an empty inventory
-  instead.
+- Release 0.7.0 [#32](https://github.com/puppetlabs/puppetlabs-terraform/pull/32) ([h0tw1r3](https://github.com/h0tw1r3))
+- Modernize project [#31](https://github.com/puppetlabs/puppetlabs-terraform/pull/31) ([h0tw1r3](https://github.com/h0tw1r3))
+- add refresh task parameters and refresh plan [#30](https://github.com/puppetlabs/puppetlabs-terraform/pull/30) ([h0tw1r3](https://github.com/h0tw1r3))
+- Fixes missed rename [#28](https://github.com/puppetlabs/puppetlabs-terraform/pull/28) ([ody](https://github.com/ody))
+- Provide a refresh task for syncing state without an apply [#27](https://github.com/puppetlabs/puppetlabs-terraform/pull/27) ([ody](https://github.com/ody))
+- (maint) Add release workflow [#25](https://github.com/puppetlabs/puppetlabs-terraform/pull/25) ([beechtom](https://github.com/beechtom))
 
-## Release 0.4.0
+## [0.6.1](https://github.com/puppetlabs/puppetlabs-terraform/tree/0.6.1) - 2021-01-22
 
-### New features
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-terraform/compare/0.6.0...0.6.1)
 
-* **Added `initialize` task**
+### Other
 
-  There has been a simple `initialize` task added to the module that can be used to ensure Terraform project directories are initialized with required modules and providers installed so your code runs without manually running `terraform init` before executing a plan.
+- (maint) Add PDK as a dependency [#24](https://github.com/puppetlabs/puppetlabs-terraform/pull/24) ([lucywyman](https://github.com/lucywyman))
+- (maint) Add code of conduct and contributing docs [#23](https://github.com/puppetlabs/puppetlabs-terraform/pull/23) ([beechtom](https://github.com/beechtom))
 
-## Release 0.3.0
+## [0.6.0](https://github.com/puppetlabs/puppetlabs-terraform/tree/0.6.0) - 2021-01-21
 
-### New features
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-terraform/compare/0.5.0...0.6.0)
 
-* **Added `target_mapping` parameter in `resolve_reference` task** ([#1405](https://github.com/puppetlabs/bolt/issues/1405))
+### Other
 
-  The `resolve_reference` task has a new `target_mapping` parameter that accepts a hash of target attributes and the resource values to populate them with.
+- (maint) Bump maximum Puppet version, prep for 0.6.0 release [#22](https://github.com/puppetlabs/puppetlabs-terraform/pull/22) ([lucywyman](https://github.com/lucywyman))
 
-* **Added `state` parameter in the `resolve_reference` task** ([#1405](https://github.com/puppetlabs/bolt/issues/1405))
+## [0.5.0](https://github.com/puppetlabs/puppetlabs-terraform/tree/0.5.0) - 2020-04-06
 
-  The `statefile` parameter for the `resolve_reference` task has been replaced with a `state` parameter to maintain consistency among the other tasks and plans in the module.
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-terraform/compare/0.4.0...0.5.0)
 
-### Bug fixes
+### Other
 
-* **Raise error when remote state cannot be loaded** ([#1436](https://github.com/puppetlabs/bolt/issues/1436))
+- (maint) Prep 0.5.0 [#17](https://github.com/puppetlabs/puppetlabs-terraform/pull/17) ([beechtom](https://github.com/beechtom))
+- Handle case of absent statefile [#16](https://github.com/puppetlabs/puppetlabs-terraform/pull/16) ([reidmv](https://github.com/reidmv))
 
-  When attempting to load remote state from a non-existent state file, `terraform` would return a `nil` value which would be loaded into the inventory and cause Bolt to error. The `terraform` plugin now checks whether the attempt to load remote state returned any data and errors if it did not.
+## [0.4.0](https://github.com/puppetlabs/puppetlabs-terraform/tree/0.4.0) - 2020-02-14
 
-## Release 0.2.0
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-terraform/compare/0.3.0...0.4.0)
 
-### Bug fixes
+### Other
 
-* **Expand `dir` path relative to Boltdir** ([#1162](https://github.com/puppetlabs/bolt/issues/1162))
+- (maint) Prep 0.4.0 [#15](https://github.com/puppetlabs/puppetlabs-terraform/pull/15) ([beechtom](https://github.com/beechtom))
+- (maint) Set resolve_reference task to private [#14](https://github.com/puppetlabs/puppetlabs-terraform/pull/14) ([beechtom](https://github.com/beechtom))
+- Add simple initialization task [#12](https://github.com/puppetlabs/puppetlabs-terraform/pull/12) ([ody](https://github.com/ody))
+- (packaging) Resolve Gem dependency conflict for ship job [#11](https://github.com/puppetlabs/puppetlabs-terraform/pull/11) ([donoghuc](https://github.com/donoghuc))
 
-  The `dir` option will now be expanded relative to the active Boltdir the user is running bolt with, instead of the current working directory they ran Bolt from. This is part of standardizing all configurable paths in Bolt to be relative to the Boltdir.
+## [0.3.0](https://github.com/puppetlabs/puppetlabs-terraform/tree/0.3.0) - 2019-12-02
 
-## Release 0.1.0
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-terraform/compare/0.2.0...0.3.0)
 
-This is the initial release.
+### Fixed
+
+- (GH-1436) Raise error when remote state cannot be loaded [#7](https://github.com/puppetlabs/puppetlabs-terraform/pull/7) ([beechtom](https://github.com/beechtom))
+
+### Other
+
+- Update module to version 0.3.0. [#10](https://github.com/puppetlabs/puppetlabs-terraform/pull/10) ([beechtom](https://github.com/beechtom))
+- (GH-1360) Expose `state_out` parameter for apply/destroy [#9](https://github.com/puppetlabs/puppetlabs-terraform/pull/9) ([donoghuc](https://github.com/donoghuc))
+- (GH-1360) Allow multiple var-file CLI opts [#8](https://github.com/puppetlabs/puppetlabs-terraform/pull/8) ([donoghuc](https://github.com/donoghuc))
+- (DO NOT MERGE)(GH-1405) Convert resolve_reference task to use ruby_plugin_helper [#6](https://github.com/puppetlabs/puppetlabs-terraform/pull/6) ([beechtom](https://github.com/beechtom))
+- avoid browser warnings in source URL [#5](https://github.com/puppetlabs/puppetlabs-terraform/pull/5) ([DavidS](https://github.com/DavidS))
+- (GH-1360) Provision, destroy and query output from terraform resources [#4](https://github.com/puppetlabs/puppetlabs-terraform/pull/4) ([donoghuc](https://github.com/donoghuc))
+
+## [0.2.0](https://github.com/puppetlabs/puppetlabs-terraform/tree/0.2.0) - 2019-10-30
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-terraform/compare/0.1.0...0.2.0)
+
+### Other
+
+- (GH-1162) Expand dir path relative to Boltdir [#3](https://github.com/puppetlabs/puppetlabs-terraform/pull/3) ([lucywyman](https://github.com/lucywyman))
+- (packaging) Pin puppet-blacksmith for forge module ship [#2](https://github.com/puppetlabs/puppetlabs-terraform/pull/2) ([donoghuc](https://github.com/donoghuc))
+
+## [0.1.0](https://github.com/puppetlabs/puppetlabs-terraform/tree/0.1.0) - 2019-10-22
+
+[Full Changelog](https://github.com/puppetlabs/puppetlabs-terraform/compare/bb8aa39bce831f3833fbf007861e2b21560d120c...0.1.0)
