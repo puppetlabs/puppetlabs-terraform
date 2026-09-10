@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'spec_helper_acceptance'
 require 'bolt_spec/run'
 require 'open3'
 
@@ -32,14 +32,14 @@ describe 'terraform::apply' do
   end
 
   it 'applies terraform manifest and returns logs' do
-    result = run_plan('terraform::apply', 'dir' => terraform_dir)
+    result = run_plan('terraform::apply', { 'dir' => terraform_dir })
     expect(result['status']).to eq('success')
     expect(result['value'][0]['value']['stdout'])
       .to match(%r{Apply complete! Resources: 2 added, 0 changed, 0 destroyed.})
   end
 
   it 'applies terraform manifest and returns output' do
-    result = run_plan('terraform::apply', 'dir' => terraform_dir, 'return_output' => true)
+    result = run_plan('terraform::apply', { 'dir' => terraform_dir, 'return_output' => true })
     expect(result['status']).to eq('success')
     expect(result['value']['terraform_output']['value']).to eq(expected_default_output)
   end
@@ -49,7 +49,7 @@ describe 'terraform::apply' do
       'dir' => terraform_dir,
       'return_output' => true,
       'var' => { 'clivar' => 'foo' },
-      'var_file' => var_file
+      'var_file' => var_file,
     }
     result = run_plan('terraform::apply', params)
     expect(result['status']).to eq('success')

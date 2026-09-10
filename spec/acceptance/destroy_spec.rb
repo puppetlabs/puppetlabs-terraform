@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require 'spec_helper'
+require 'spec_helper_acceptance'
 require 'bolt_spec/run'
 require 'open3'
 
@@ -29,7 +29,7 @@ describe 'terraform::destroy' do
   end
 
   it 'destroys Terraform resources' do
-    result = run_plan('terraform::destroy', 'dir' => terraform_dir)
+    result = run_plan('terraform::destroy', { 'dir' => terraform_dir })
     expect(result['status']).to eq('success')
     expect(result['value'][0]['value']['stdout'])
       .to match(%r{Destroy complete! Resources: 2 destroyed.})

@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 # frozen_string_literal: true
 
-require_relative '../../ruby_task_helper/files/task_helper.rb' unless Object.const_defined?('TaskHelper')
-require_relative '../../ruby_plugin_helper/lib/plugin_helper.rb' unless Object.const_defined?('RubyPluginHelper')
+require_relative '../../ruby_task_helper/files/task_helper' unless Object.const_defined?(:TaskHelper)
+require_relative '../../ruby_plugin_helper/lib/plugin_helper' unless Object.const_defined?(:RubyPluginHelper)
 require 'json'
 require 'open3'
 
@@ -19,9 +19,9 @@ class Terraform < TaskHelper
 
     state = load_statefile(opts)
     regex = Regexp.new(opts[:resource_type])
-    targets = extract_resources(state).map { |type, resource|
+    targets = extract_resources(state).filter_map do |type, resource|
       resource if type.match?(regex)
-    }.compact
+    end
 
     attributes = required_data(template)
     target_data = targets.map do |target|
