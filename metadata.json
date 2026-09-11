@@ -1,6 +1,6 @@
 {
   "name": "puppetlabs-terraform",
-  "version": "1.0.0",
+  "version": "0.8.0",
   "author": "Puppet, Inc.",
   "summary": "A task to generate Bolt inventory from Terraform statefiles",
   "license": "Apache-2.0",
@@ -32,7 +32,7 @@
   "requirements": [
     {
       "name": "puppet",
-      "version_requirement": ">= 8.0.0 < 10.0.0"
+      "version_requirement": ">= 4.10.0 < 10.0.0"
     }
   ],
   "pdk-version": "3.6.1",
